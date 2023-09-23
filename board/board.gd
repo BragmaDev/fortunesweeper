@@ -29,12 +29,13 @@ func init_values(data : BoardData) -> void:
 
 
 # Instance board cells
-# Number of rows and columns is determined by the var 'size'
+# Number of rows and columns is determined by the var '_size'
 func _create_cells() -> void:
 	for row in range(_size):
 		_cells.append([]) # Add new row
 		for col in range(_size):
 			var cell : Cell = CELL_SCENE.instance()
+			cell.set_row_and_column(row, col)
 			# Connect signals
 			cell.connect("pressed", self, "_on_cell_pressed", [cell])
 			cell.connect("flagged", self, "_on_cell_flagged", [cell])
@@ -48,7 +49,7 @@ func _on_cell_flagged(cell : Cell) -> void:
 
 
 func _on_cell_pressed(cell : Cell) -> void:
-	pass
+	print(cell._row, " ", cell._col)
 
 
 func _place_contents() -> void:
