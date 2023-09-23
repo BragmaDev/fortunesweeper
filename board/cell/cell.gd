@@ -2,13 +2,19 @@ extends Area2D
 class_name Cell
 
 
+signal pressed # Left-click
+signal flagged # User-initiated flag changes
+signal flag_changed # Automatic flag changes
+
 enum Types {EMPTY, HOLE, GOLD, DIAMOND}
 enum Flags {NONE, HOLE, GOLD, DIAMOND}
 enum States {UNREVEALED, REVEALED}
 
-signal pressed # Left-click
-signal flagged # User-initiated flag changes
-signal flag_changed # Automatic flag changes
+const NUMBER_COLORS = {
+	"hole": Color("e27285"),
+	"gold": Color("f8c53a"),
+	"diamond": Color("d0ffea")
+}
 
 var row : int
 var col : int
@@ -106,6 +112,15 @@ func set_state(state : int) -> void:
 	# Update number label
 	if not _filled_nb_count == 0: 
 		number_label.set_text(str(_filled_nb_count))
+		# Set color
+		number_label.set("custom_colors/font_color", NUMBER_COLORS["hole"])
+		for neighbor in _neighbors:
+			if neighbor.get_type() == Types.DIAMOND:
+				number_label.set("custom_colors/font_color", NUMBER_COLORS["diamond"])
+				break
+			
+			elif neighbor.get_type() == Types.GOLD:
+				number_label.set("custom_colors/font_color", NUMBER_COLORS["gold"])
 	else:
 		number_label.set_text("")
 	
