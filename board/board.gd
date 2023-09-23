@@ -15,8 +15,11 @@ var _diamond_count : int
 
 
 func _ready() -> void:
+	EventBus.connect("finish_button_pressed", self, "_check_correct_flags")
+	
 	set_global_position(_pos_offset)
 	_create_cells()
+	_update_flag_counts()
 
 
 # Initializes counts for filled cells
@@ -28,12 +31,45 @@ func init_values(data : BoardData) -> void:
 	_diamond_count = data.diamond_count
 
 
+# Checks if any of the cells is still unrevealed and unflagged
+func _check_completion() -> bool:
+	for row in _size:
+		for col in _size:
+			var cell = _cells[row][col]
+			if cell.get_state() == Cell.States.UNREVEALED and cell.get_flag() == Cell.Flags.NONE:
+				EventBus.emit_signal("board_completion_checked", false)
+				return false
+				
+	EventBus.emit_signal("board_completion_checked", true)
+	return true
+
+
+# Checks how many cells have been correctly flagged
+func _check_correct_flags() -> int:
+	var correct_flags = 0
+	
+	for row in _size:
+		for col in _size:
+			var cell = _cells[row][col]
+			if cell.get_type() == Cell.Types.HOLE and cell.get_flag() == Cell.Flags.HOLE:
+				correct_flags += 1
+			
+			if cell.get_type() == Cell.Types.GOLD and cell.get_flag() == Cell.Flags.GOLD:
+				correct_flags += 1
+			
+			if cell.get_type() == Cell.Types.DIAMOND and cell.get_flag() == Cell.Flags.DIAMOND:
+				correct_flags += 1
+	
+	print(float(correct_flags) / float(_hole_count + _gold_count + _diamond_count))
+	return correct_flags
+
+
 # Instances board cells
 # Number of rows and columns is determined by the var '_size'
 func _create_cells() -> void:
-	for row in range(_size):
+	for row in _size:
 		_cells.append([]) # Add new row
-		for col in range(_size):
+		for col in _size:
 			var cell : Cell = CELL_SCENE.instance()
 			cell.set_row_and_column(row, col)
 			# Connect signals
@@ -90,10 +126,12 @@ func _on_cell_flagged(cell : Cell) -> void:
 		cell.set_flag(Cell.Flags.NONE)
 	
 	_update_flag_counts()
+	_check_completion()
 
 
 func _on_cell_pressed(cell : Cell) -> void:
 	_reveal_cell(cell)
+	_check_completion()
 
 
 # Generates positions for filled cells and sets their types
@@ -106,8 +144,8 @@ func _place_contents(protected_cells : Array) -> void:
 	
 	# Create array of free cell positions
 	var free_cells = []
-	for row in range(_size):
-		for col in range(_size):
+	for row in _size:
+		for col in _size:
 			var cell = _cells[row][col]
 			if cell.get_type() == Cell.Types.EMPTY and not cell in protected_cells:
 				free_cells.append(cell)
@@ -184,7 +222,7 @@ func _update_flag_counts() -> void:
 
 
 func _update_neighbor_arrays() -> void:
-	for row in range(_size):
-		for col in range(_size):
+	for row in _size:
+		for col in _size:
 			var cell = _cells[row][col]
 			cell.set_neighbors(_get_cell_neighbors(cell.row, cell.col))

@@ -62,6 +62,10 @@ func get_neighbors() -> Array:
 	return _neighbors
 
 
+func get_state() -> int:
+	return _state
+
+
 func get_type() -> int:
 	return _type
 
