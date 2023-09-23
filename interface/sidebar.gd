@@ -4,6 +4,7 @@ extends Control
 var _game_state : GameStateData = preload("res://common/game_state_data.tres")
 
 onready var timer_label : Label = $TimerLabel
+onready var money_label : Label = $MoneyLabel
 onready var hole_flag_label : Label = $FlagPanel/HoleFlagLabel
 onready var gold_flag_label : Label = $FlagPanel/GoldFlagLabel
 onready var diamond_flag_label : Label = $FlagPanel/DiamondFlagLabel
@@ -21,7 +22,10 @@ func _ready() -> void:
 
 func _physics_process(_delta : float) -> void:
 	# Update timer label
-	timer_label.set_text(str(round(_game_state.time)))
+	timer_label.set_text(Formatter.format_time_string(_game_state.time))
+	
+	# Update money label
+	money_label.set_text(Formatter.format_money_string(_game_state.money))
 
 
 func _toggle_finish_button(enabled : bool) -> void:

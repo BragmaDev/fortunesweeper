@@ -40,6 +40,14 @@ custom_colors/font_color = Color( 0.34902, 0.341176, 0.341176, 1 )
 text = "0.000"
 align = 2
 
+[node name="MoneyLabel" type="Label" parent="CanvasLayer/Sidebar"]
+margin_top = 11.0
+margin_right = 40.0
+margin_bottom = 24.0
+custom_colors/font_color = Color( 0.972549, 0.772549, 0.227451, 1 )
+text = "$1,000,000"
+align = 1
+
 [node name="FlagPanel" type="Panel" parent="CanvasLayer/Sidebar"]
 anchor_left = 1.0
 anchor_top = 1.0
