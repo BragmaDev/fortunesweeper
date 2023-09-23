@@ -39,6 +39,7 @@ func _create_cells() -> void:
 			# Connect signals
 			cell.connect("pressed", self, "_on_cell_pressed", [cell])
 			cell.connect("flagged", self, "_on_cell_flagged", [cell])
+			cell.connect("flag_changed", self, "_update_flag_counts")
 			add_child(cell)
 			cell.set_position(Vector2(CELL_SIZE * col, CELL_SIZE * row))
 			_cells[row].append(cell)
@@ -76,7 +77,19 @@ func _get_cell_neighbors(row : int, col : int) -> Array:
 
 
 func _on_cell_flagged(cell : Cell) -> void:
-	pass
+	if cell.get_flag() == Cell.Flags.NONE:
+		cell.set_flag(Cell.Flags.HOLE)
+	
+	elif cell.get_flag() == Cell.Flags.HOLE:
+		cell.set_flag(Cell.Flags.GOLD)
+	
+	elif cell.get_flag() == Cell.Flags.GOLD:
+		cell.set_flag(Cell.Flags.DIAMOND)
+	
+	elif cell.get_flag() == Cell.Flags.DIAMOND:
+		cell.set_flag(Cell.Flags.NONE)
+	
+	_update_flag_counts()
 
 
 func _on_cell_pressed(cell : Cell) -> void:
@@ -149,6 +162,25 @@ func _reveal_cell(cell : Cell) -> void:
 					queue.push_back(neighbor)
 				
 				visited.append(neighbor)
+
+
+# Counts how many instances of specifics flags are left
+# Emits an EventBus signal with the results
+func _update_flag_counts() -> void:
+	var hole_flags = _hole_count
+	var gold_flags = _gold_count
+	var diamond_flags = _diamond_count
+	
+	for row in _size:
+		for col in _size:
+			if _cells[row][col].get_flag() == Cell.Flags.HOLE:
+				hole_flags -= 1
+			elif _cells[row][col].get_flag() == Cell.Flags.GOLD:
+				gold_flags -= 1
+			elif _cells[row][col].get_flag() == Cell.Flags.DIAMOND:
+				diamond_flags -= 1
+	
+	EventBus.emit_signal("flag_counts_changed", hole_flags, gold_flags, diamond_flags)
 
 
 func _update_neighbor_arrays() -> void:

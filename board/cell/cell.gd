@@ -68,6 +68,17 @@ func get_type() -> int:
 
 func set_flag(flag : int) -> void:
 	_flag = flag
+	if flag == Flags.NONE:
+		flag_sprite.set_animation("none")
+	
+	elif flag == Flags.HOLE:
+		flag_sprite.set_animation("hole")
+	
+	elif flag == Flags.GOLD:
+		flag_sprite.set_animation("gold")
+	
+	elif flag == Flags.DIAMOND:
+		flag_sprite.set_animation("diamond")
 
 
 func set_neighbors(neighbors : Array) -> void:

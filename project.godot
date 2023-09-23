@@ -39,6 +39,7 @@ config/icon="res://icon.png"
 [autoload]
 
 RNG="*res://autoloads/rng.gd"
+EventBus="*res://autoloads/event_bus.gd"
 
 [display]
 
