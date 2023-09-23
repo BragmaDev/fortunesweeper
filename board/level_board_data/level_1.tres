@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://board/board_data.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+size = 12
+pos_offset = Vector2( 12, 12 )
+hole_count = 14
+gold_count = 14
+diamond_count = 1
