@@ -9,7 +9,18 @@ var _board : Board
 
 
 func _ready() -> void:
+	EventBus.connect("finish_button_pressed", self, "_end_level")
+	
 	# Set up board
 	_board = BOARD_SCENE.instance()
 	_board.init_values(LEVEL_1_BOARD_DATA)
+	add_child(_board)
+
+
+func _end_level() -> void:
+	_board.check_correct_flags()
+	_board.queue_free() # Free current board
+	
+	_board = BOARD_SCENE.instance() # Instantiate new board
+	_board.init_values(LEVEL_2_BOARD_DATA)
 	add_child(_board)
