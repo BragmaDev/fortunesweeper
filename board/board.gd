@@ -20,26 +20,6 @@ func _ready() -> void:
 	_update_flag_counts()
 
 
-# Checks how many cells have been correctly flagged
-func check_correct_flags() -> int:
-	var correct_flags = 0
-	
-	for row in _size:
-		for col in _size:
-			var cell = _cells[row][col]
-			if cell.get_type() == Cell.Types.HOLE and cell.get_flag() == Cell.Flags.HOLE:
-				correct_flags += 1
-			
-			if cell.get_type() == Cell.Types.GOLD and cell.get_flag() == Cell.Flags.GOLD:
-				correct_flags += 1
-			
-			if cell.get_type() == Cell.Types.DIAMOND and cell.get_flag() == Cell.Flags.DIAMOND:
-				correct_flags += 1
-	
-	print(float(correct_flags) / float(_hole_count + _gold_count + _diamond_count))
-	return correct_flags
-
-
 # Initializes counts for filled cells
 func init_values(data : BoardData) -> void:
 	_size = data.size
@@ -47,6 +27,26 @@ func init_values(data : BoardData) -> void:
 	_hole_count = data.hole_count
 	_gold_count = data.gold_count
 	_diamond_count = data.diamond_count
+
+
+# Checks how many cells have been correctly flagged
+# Returns a dictionary with separate counts for each flag type
+func get_correct_flags() -> Dictionary:
+	var correct_flags = {"hole": 0, "gold": 0, "diamond": 0}
+	
+	for row in _size:
+		for col in _size:
+			var cell = _cells[row][col]
+			if cell.get_type() == Cell.Types.HOLE and cell.get_flag() == Cell.Flags.HOLE:
+				correct_flags["hole"] += 1
+			
+			if cell.get_type() == Cell.Types.GOLD and cell.get_flag() == Cell.Flags.GOLD:
+				correct_flags["gold"] += 1
+			
+			if cell.get_type() == Cell.Types.DIAMOND and cell.get_flag() == Cell.Flags.DIAMOND:
+				correct_flags["diamond"] += 1
+	
+	return correct_flags
 
 
 # Checks if any of the cells is still unrevealed and unflagged

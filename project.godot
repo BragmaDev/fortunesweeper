@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "Cell",
 "language": "GDScript",
 "path": "res://board/cell/cell.gd"
+}, {
+"base": "Resource",
+"class": "GameStateData",
+"language": "GDScript",
+"path": "res://common/game_state_data.gd"
 } ]
 _global_script_class_icons={
 "Board": "",
 "BoardData": "",
-"Cell": ""
+"Cell": "",
+"GameStateData": ""
 }
 
 [application]

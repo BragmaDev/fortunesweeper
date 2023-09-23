@@ -30,26 +30,15 @@ anchor_bottom = 1.0
 margin_left = -40.0
 script = ExtResource( 3 )
 
-[node name="HoleFlagTexture" type="TextureRect" parent="CanvasLayer/Sidebar"]
-margin_left = 6.0
-margin_top = 77.0
-margin_right = 14.0
-margin_bottom = 85.0
-texture = SubResource( 1 )
-
-[node name="GoldFlagTexture" type="TextureRect" parent="CanvasLayer/Sidebar"]
-margin_left = 16.0
-margin_top = 77.0
-margin_right = 24.0
-margin_bottom = 85.0
-texture = SubResource( 2 )
-
-[node name="DiamondFlagTexture" type="TextureRect" parent="CanvasLayer/Sidebar"]
-margin_left = 26.0
-margin_top = 77.0
-margin_right = 34.0
-margin_bottom = 85.0
-texture = SubResource( 3 )
+[node name="TimerLabel" type="Label" parent="CanvasLayer/Sidebar"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -40.0
+margin_right = -4.0
+margin_bottom = 13.0
+custom_colors/font_color = Color( 0.34902, 0.341176, 0.341176, 1 )
+text = "0.000"
+align = 2
 
 [node name="FlagPanel" type="Panel" parent="CanvasLayer/Sidebar"]
 anchor_left = 1.0
@@ -87,6 +76,24 @@ margin_bottom = 10.0
 custom_colors/font_color = Color( 0.815686, 1, 0.917647, 1 )
 text = "10"
 align = 1
+
+[node name="HoleFlagTexture" type="TextureRect" parent="CanvasLayer/Sidebar/FlagPanel"]
+margin_left = 2.0
+margin_top = -8.0
+margin_right = 10.0
+texture = SubResource( 1 )
+
+[node name="GoldFlagTexture" type="TextureRect" parent="CanvasLayer/Sidebar/FlagPanel"]
+margin_left = 12.0
+margin_top = -8.0
+margin_right = 20.0
+texture = SubResource( 2 )
+
+[node name="DiamondFlagTexture" type="TextureRect" parent="CanvasLayer/Sidebar/FlagPanel"]
+margin_left = 22.0
+margin_top = -8.0
+margin_right = 30.0
+texture = SubResource( 3 )
 
 [node name="FinishButton" type="TextureButton" parent="CanvasLayer/Sidebar"]
 anchor_left = 1.0

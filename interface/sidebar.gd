@@ -1,6 +1,9 @@
 extends Control
 
 
+var _game_state : GameStateData = preload("res://common/game_state_data.tres")
+
+onready var timer_label : Label = $TimerLabel
 onready var hole_flag_label : Label = $FlagPanel/HoleFlagLabel
 onready var gold_flag_label : Label = $FlagPanel/GoldFlagLabel
 onready var diamond_flag_label : Label = $FlagPanel/DiamondFlagLabel
@@ -14,7 +17,12 @@ func _ready() -> void:
 	
 	_toggle_finish_button(false)
 	finish_button.connect("pressed", EventBus, "emit_signal", ["finish_button_pressed"])
-	
+
+
+func _physics_process(_delta : float) -> void:
+	# Update timer label
+	timer_label.set_text(str(round(_game_state.time)))
+
 
 func _toggle_finish_button(enabled : bool) -> void:
 	finish_button.set_disabled(!enabled)
