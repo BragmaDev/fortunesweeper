@@ -1,13 +1,62 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://board/cell/cell.gd" type="Script" id=1]
-[ext_resource path="res://board/cell/unrevealed.png" type="Texture" id=2]
+[ext_resource path="res://board/cell/cell.png" type="Texture" id=2]
+[ext_resource path="res://board/cell/contents.png" type="Texture" id=3]
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 8, 0, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 8, 8 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 2 ) ],
+"frames": [ SubResource( 3 ) ],
 "loop": true,
-"name": "default",
+"name": "revealed",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 4 ) ],
+"loop": true,
+"name": "unrevealed",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 3 )
+region = Rect2( 16, 0, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 3 )
+region = Rect2( 8, 0, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 8, 8 )
+
+[sub_resource type="SpriteFrames" id=8]
+animations = [ {
+"frames": [ SubResource( 5 ) ],
+"loop": true,
+"name": "diamond",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "empty",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 6 ) ],
+"loop": true,
+"name": "gold",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 7 ) ],
+"loop": true,
+"name": "hole",
 "speed": 5.0
 } ]
 
@@ -20,11 +69,24 @@ script = ExtResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 4, 4 )
 frames = SubResource( 2 )
+animation = "unrevealed"
 
 [node name="ContentSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 4, 4 )
+frames = SubResource( 8 )
+animation = "empty"
 
 [node name="FlagSprite" type="AnimatedSprite" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 4, 4 )
 shape = SubResource( 1 )
+
+[node name="NumberLabel" type="Label" parent="."]
+margin_left = 2.0
+margin_top = -4.0
+margin_right = 8.0
+margin_bottom = 9.0
+size_flags_horizontal = 12
+size_flags_vertical = 12
+align = 1

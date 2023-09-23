@@ -36,18 +36,23 @@ config/name="Fortunesweeper"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+RNG="*res://autoloads/rng.gd"
+
 [display]
 
 window/size/width=160
 window/size/height=120
-window/size/test_width=960
-window/size/test_height=720
+window/size/test_width=1280
+window/size/test_height=960
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
+theme/custom="res://interface/theme.tres"
 
 [importer_defaults]
 
