@@ -10,6 +10,8 @@ onready var finish_button : TextureButton = $FinishButton
 func _ready() -> void:
 	EventBus.connect("flag_counts_changed", self, "_update_flag_labels")
 	EventBus.connect("board_completion_checked", self, "_toggle_finish_button")
+	EventBus.connect("level_ended", self, "_toggle_finish_button", [false])
+	
 	_toggle_finish_button(false)
 	finish_button.connect("pressed", EventBus, "emit_signal", ["finish_button_pressed"])
 	

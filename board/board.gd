@@ -72,6 +72,7 @@ func _create_cells() -> void:
 			cell.set_row_and_column(row, col)
 			# Connect signals
 			cell.connect("pressed", self, "_on_cell_pressed", [cell])
+			cell.connect("chorded", self, "_on_cell_chorded", [cell])
 			cell.connect("flagged", self, "_on_cell_flagged", [cell])
 			cell.connect("flag_changed", self, "_update_flag_counts")
 			add_child(cell)
@@ -108,6 +109,26 @@ func _get_cell_neighbors(row : int, col : int) -> Array:
 		neighbors.append(_cells[row + 1][col + 1])
 	
 	return neighbors
+
+
+func _on_cell_chorded(cell : Cell) -> void:
+	if not cell.get_type() == Cell.Types.EMPTY:
+		return
+	
+	# Check that neighboring cells have the correct number of flags placed
+	var flagged_neighbors = 0
+	for neighbor in cell.get_neighbors():
+		if not neighbor.get_flag() == Cell.Flags.NONE:
+			flagged_neighbors += 1
+	
+	if flagged_neighbors == cell.get_filled_nb_count():
+		# Reveal all surrounding cells that aren't flagged
+		for neighbor in cell.get_neighbors():
+			if (
+					neighbor.get_state() == Cell.States.UNREVEALED 
+					and neighbor.get_flag() == Cell.Flags.NONE
+			):
+				_reveal_cell(neighbor)
 
 
 func _on_cell_flagged(cell : Cell) -> void:

@@ -24,3 +24,4 @@ func _end_level() -> void:
 	_board = BOARD_SCENE.instance() # Instantiate new board
 	_board.init_values(LEVEL_2_BOARD_DATA)
 	add_child(_board)
+	EventBus.emit_signal("level_ended")

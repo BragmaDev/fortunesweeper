@@ -3,7 +3,8 @@ class_name Cell
 
 
 signal pressed # Left-click
-signal flagged # User-initiated flag changes
+signal chorded # Middle-click
+signal flagged # User-initiated flag changes, i.e. right-click
 signal flag_changed # Automatic flag changes
 
 enum Types {EMPTY, HOLE, GOLD, DIAMOND}
@@ -39,7 +40,15 @@ func _input_event(_viewport, event, _shape_idx) -> void:
 			and event.is_pressed()
 	):
 		emit_signal("pressed")
-		
+	
+	# Check if the cell was chorded
+	elif (
+			event is InputEventMouseButton
+			and event.get_button_index() == BUTTON_MIDDLE
+			and event.is_pressed()
+	):
+		emit_signal("chorded")
+	
 	# Check if the cell was flagged by the player
 	elif (
 			event is InputEventMouseButton
