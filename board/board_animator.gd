@@ -2,42 +2,59 @@ class_name BoardAnimator
 extends Node
 
 
-signal animation_finished
+signal appear_animation_finished
+signal mining_animation_finished
+signal triggered_cell_mining(cell)
 
-var _started : bool = false
-var _tweens : Array = []
-
-
-func _physics_process(_delta : float) -> void:
-	if _started:
-		if _tweens.empty():
-			emit_signal("animation_finished")
-			_started = false
-			EventBus.emit_signal("sequence_finished")
+var _appear_tween_duration = 0.6
+var _mine_delay = 0.2
 
 
 func start_appear_animation(cells : Array) -> void:
-	_started = true
 	EventBus.emit_signal("sequence_started")
 	
-	for i in range(cells.size() - 1, -1, -1):
+	for i in range(0, cells.size()):
 		for cell in cells[i]:
 			# Move cells up	
 			cell.set_position(cell.get_position() - Vector2(0, 150))
 	
-	for i in range(cells.size() - 1, -1, -1):
-		for cell in cells[i]:
+	for n in range(0, cells.size()):
+		for m in cells[n].size():
+			var cell = cells[n][m]
 			var final_pos = cell.get_position() + Vector2(0, 150)
-			var tween = create_tween()
-			_tweens.append(tween)
-			
-			tween.set_trans(Tween.TRANS_QUART)
-			tween.tween_property(cell, "position", final_pos, 0.6)
-			tween.connect("finished", self, "_erase_from_tweens", [tween])
-			
-			# Create delay
-			yield(get_tree().create_timer(0.008, false), "timeout")
+			var timer = get_tree().create_timer(0.1 * (cells.size() - n + 1), false)
+			timer.connect("timeout", self, "_tween_cell_to_position", [cell, final_pos, _appear_tween_duration])
+	
+	# Start finishing timer
+	var timer = get_tree().create_timer(0.1 * (cells.size() + 1) + _appear_tween_duration)
+	timer.connect("timeout", self, "_finish_animation", ["appear_animation_finished"])
 
 
-func _erase_from_tweens(tween : SceneTreeTween) -> void:
-	_tweens.erase(tween)
+func start_mining_animation(cells : Array) -> void:
+	EventBus.emit_signal("sequence_started")
+	
+	# Put flagged cells into a separate array
+	var flagged_cells = []
+	for row in cells.size():
+		for col in cells[row].size():
+			if not cells[row][col].get_flag() == Cell.Flags.NONE:
+				flagged_cells.append(cells[row][col])
+	
+	# Start a timer for mining each cell
+	for i in flagged_cells.size():
+		var timer = get_tree().create_timer(_mine_delay * i, false)
+		timer.connect("timeout", self, "emit_signal", ["triggered_cell_mining", flagged_cells[i]])
+	
+	# Start finishing timer
+	var timer = get_tree().create_timer(_mine_delay * flagged_cells.size() + 1.0)
+	timer.connect("timeout", self, "_finish_animation", ["mining_animation_finished"])
+
+
+func _finish_animation(signal_name : String) -> void:
+	emit_signal(signal_name)
+	EventBus.emit_signal("sequence_finished")
+
+
+func _tween_cell_to_position(cell : Cell, pos : Vector2, duration : float) -> void:
+	var tween = create_tween().set_trans(Tween.TRANS_QUART)
+	tween.tween_property(cell, "position", pos, duration)

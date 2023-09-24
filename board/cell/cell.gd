@@ -9,7 +9,7 @@ signal flag_changed # Automatic flag changes
 
 enum Types {EMPTY, HOLE, GOLD, DIAMOND}
 enum Flags {NONE, HOLE, GOLD, DIAMOND}
-enum States {UNREVEALED, REVEALED}
+enum States {UNREVEALED, REVEALED, MINED}
 
 var row : int
 var col : int
@@ -105,6 +105,7 @@ func set_state(state : int) -> void:
 	_state = state
 	if _state == States.UNREVEALED:
 		sprite.set_animation("unrevealed")
+		return
 		
 	elif _state == States.REVEALED:
 		sprite.set_animation("revealed")
@@ -112,19 +113,13 @@ func set_state(state : int) -> void:
 		# Remove flag automatically
 		set_flag(Flags.NONE)
 		emit_signal("flag_changed")
-		
-	# Set content sprite if filled
-	if _type == Types.HOLE:
-		content_sprite.set_animation("hole")
-		return
-		
-	elif _type == Types.GOLD:
-		content_sprite.set_animation("gold")
-		return
-		
-	elif _type == Types.DIAMOND:
-		content_sprite.set_animation("diamond")
-		return
+	
+	elif _state == States.MINED:
+		sprite.set_animation("revealed")
+		flag_sprite.set_animation("none")
+		$CPUParticles2D.set_emitting(true)
+	
+	_update_content_sprite()
 	
 	# Update filled neighbor count
 	_filled_nb_count = 0
@@ -132,8 +127,35 @@ func set_state(state : int) -> void:
 		if not neighbor.get_type() == Types.EMPTY:
 			_filled_nb_count += 1
 
+	_update_number_label()
+	
+
+func set_type(type : int) -> void:
+	_type = type
+
+
+func _update_content_sprite() -> void:
+	# Set content sprite if filled
+	if _type == Types.HOLE:
+		content_sprite.set_animation("hole")
+		
+	elif _type == Types.GOLD:
+		content_sprite.set_animation("gold")
+		if _state == States.MINED and not _flag == Flags.GOLD:
+			content_sprite.set_modulate(Colors.BLACK)
+		
+	elif _type == Types.DIAMOND:
+		content_sprite.set_animation("diamond")
+		if _state == States.MINED and not _flag == Flags.DIAMOND:
+			content_sprite.set_modulate(Colors.BLACK)
+	
+
+func _update_number_label() -> void:
+	if not _type == Types.EMPTY:
+		return
+	 
 	# Update number label
-	if not _filled_nb_count == 0: 
+	if not _filled_nb_count <= 0: 
 		number_label.set_text(str(_filled_nb_count))
 		# Set color
 		number_label.set("custom_colors/font_color", Colors.RED)
@@ -146,10 +168,3 @@ func set_state(state : int) -> void:
 				number_label.set("custom_colors/font_color", Colors.YELLOW)
 	else:
 		number_label.set_text("")
-	
-
-func set_type(type : int) -> void:
-	_type = type
-
-
-

@@ -17,11 +17,14 @@ onready var animator : BoardAnimator = $BoardAnimator
 
 
 func _ready() -> void:
+	EventBus.connect("finish_button_pressed", animator, "start_mining_animation", [_cells])
+	
 	set_global_position(_pos_offset)
 	_create_cells()
 	_update_flag_counts()
 	animator.start_appear_animation(_cells)
-	animator.connect("animation_finished", self, "_toggle", [true])
+	animator.connect("mining_animation_finished", EventBus, "emit_signal", ["board_mined"])
+	animator.connect("triggered_cell_mining", self, "_mine_cell")
 
 
 # Initializes counts for filled cells
@@ -113,6 +116,18 @@ func _get_cell_neighbors(row : int, col : int) -> Array:
 		neighbors.append(_cells[row + 1][col + 1])
 	
 	return neighbors
+
+
+func _mine_cell(cell : Cell) -> void:
+	cell.set_state(Cell.States.MINED)
+	if cell.get_type() == Cell.Types.HOLE and not cell.get_flag() == Cell.Flags.HOLE:
+		EventBus.emit_signal("flagged_hole_wrong")
+	
+	elif cell.get_type() == Cell.Types.GOLD and not cell.get_flag() == Cell.Flags.GOLD:
+		EventBus.emit_signal("flagged_treasure_wrong")
+	
+	elif cell.get_type() == Cell.Types.DIAMOND and not cell.get_flag() == Cell.Flags.DIAMOND:
+		EventBus.emit_signal("flagged_treasure_wrong")
 
 
 func _on_cell_chorded(cell : Cell) -> void:
