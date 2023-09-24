@@ -104,6 +104,7 @@ func set_state(state : int) -> void:
 		
 	elif _state == States.REVEALED:
 		sprite.set_animation("revealed")
+		$CPUParticles2D.set_emitting(true)
 		# Remove flag automatically
 		set_flag(Flags.NONE)
 		emit_signal("flag_changed")

@@ -3,5 +3,5 @@
 [ext_resource path="res://effects/hole_circle_effect.gd" type="Script" id=1]
 
 [node name="HoleCircleEffect" type="Node2D"]
-z_index = 1
+z_index = 10
 script = ExtResource( 1 )
