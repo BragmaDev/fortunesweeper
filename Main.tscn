@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://board/cell/flags.png" type="Texture" id=1]
-[ext_resource path="res://managers/game_manager.gd" type="Script" id=2]
+[ext_resource path="res://game_manager/game_manager.gd" type="Script" id=2]
 [ext_resource path="res://interface/sidebar.gd" type="Script" id=3]
 [ext_resource path="res://interface/buttons/finish_button_pressed.png" type="Texture" id=4]
 [ext_resource path="res://interface/buttons/finish_button_normal.png" type="Texture" id=5]

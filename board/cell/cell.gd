@@ -11,12 +11,6 @@ enum Types {EMPTY, HOLE, GOLD, DIAMOND}
 enum Flags {NONE, HOLE, GOLD, DIAMOND}
 enum States {UNREVEALED, REVEALED}
 
-const NUMBER_COLORS = {
-	"hole": Color("e27285"),
-	"gold": Color("f8c53a"),
-	"diamond": Color("d0ffea")
-}
-
 var row : int
 var col : int
 
@@ -137,14 +131,14 @@ func set_state(state : int) -> void:
 	if not _filled_nb_count == 0: 
 		number_label.set_text(str(_filled_nb_count))
 		# Set color
-		number_label.set("custom_colors/font_color", NUMBER_COLORS["hole"])
+		number_label.set("custom_colors/font_color", Colors.RED)
 		for neighbor in _neighbors:
 			if neighbor.get_type() == Types.DIAMOND:
-				number_label.set("custom_colors/font_color", NUMBER_COLORS["diamond"])
+				number_label.set("custom_colors/font_color", Colors.LIGHT_BLUE)
 				break
 			
 			elif neighbor.get_type() == Types.GOLD:
-				number_label.set("custom_colors/font_color", NUMBER_COLORS["gold"])
+				number_label.set("custom_colors/font_color", Colors.YELLOW)
 	else:
 		number_label.set_text("")
 	

@@ -12,7 +12,8 @@ var _game_state : GameStateData = preload("res://common/game_state_data.tres")
 
 
 func _ready() -> void:
-	EventBus.connect("finish_button_pressed", self, "_end_level")
+	EventBus.connect("finish_button_pressed", self, "_finish_level")
+	EventBus.connect("revealed_hole", self, "_end_level")
 	
 	# Set up game state
 	_game_state.level = 1
@@ -33,7 +34,26 @@ func _physics_process(delta : float) -> void:
 		_game_state.time += delta
 
 
-func _end_level() -> void:
+# Handles premature level endings, i.e. from revealing a hole
+func _end_level(cell : Cell) -> void:
+	EffectManager.create_hole_circle_effect(cell.get_global_position() + Vector2(4, 4))
+	var timer = get_tree().create_timer(2.0, false)
+	yield(timer, "timeout") # Wait until the circle effect ends
+	
+	_board.queue_free() # Free current board
+	
+	# Switch to the next level
+	_game_state.level += 1
+	_switch_level_data(_game_state.level)
+	
+	_board = BOARD_SCENE.instance() # Instantiate new board
+	_board.init_values(_current_level_data)
+	add_child(_board)
+	EventBus.emit_signal("level_ended")
+
+
+# Handles the normal end of the level, i.e. from clicking the finish button
+func _finish_level() -> void:
 	# Calculate rewards
 	var correct_flags = _board.get_correct_flags()
 	for i in correct_flags["gold"]:

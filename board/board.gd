@@ -205,7 +205,16 @@ func _reveal_cell(cell : Cell) -> void:
 		var current = queue.pop_front()
 		current.set_state(Cell.States.REVEALED)
 		
-		if not current.get_type() == Cell.Types.EMPTY:
+		if current.get_type() == Cell.Types.HOLE:
+			EventBus.emit_signal("revealed_hole", current)
+			return
+		
+		elif current.get_type() == Cell.Types.GOLD:
+			EventBus.emit_signal("revealed_gold", current)
+			return
+			
+		elif current.get_type() == Cell.Types.DIAMOND:
+			EventBus.emit_signal("revealed_diamond", current)
 			return
 		
 		# Add surrounding empty cells to reveal queue
