@@ -13,11 +13,15 @@ var _hole_count : int
 var _gold_count : int
 var _diamond_count : int
 
+onready var animator : BoardAnimator = $BoardAnimator
+
 
 func _ready() -> void:
 	set_global_position(_pos_offset)
 	_create_cells()
 	_update_flag_counts()
+	animator.start_appear_animation(_cells)
+	animator.connect("animation_finished", self, "_toggle", [true])
 
 
 # Initializes counts for filled cells
@@ -228,6 +232,10 @@ func _reveal_cell(cell : Cell) -> void:
 					queue.push_back(neighbor)
 				
 				visited.append(neighbor)
+
+
+func _toggle(enabled : bool) -> void:
+	print("done")
 
 
 # Counts how many instances of specifics flags are left

@@ -98,6 +98,10 @@ func set_row_and_column(row : int, col : int) -> void:
 
 
 func set_state(state : int) -> void:
+	# Redundancy check
+	if _state == state:
+		return
+	
 	_state = state
 	if _state == States.UNREVEALED:
 		sprite.set_animation("unrevealed")

@@ -12,6 +12,8 @@ var _game_state : GameStateData = preload("res://common/game_state_data.tres")
 
 
 func _ready() -> void:
+	EventBus.connect("sequence_started", self, "_pause_game_state", [true])
+	EventBus.connect("sequence_finished", self, "_pause_game_state", [false])
 	EventBus.connect("finish_button_pressed", self, "_finish_level")
 	EventBus.connect("revealed_hole", self, "_end_level")
 	
@@ -37,8 +39,7 @@ func _physics_process(delta : float) -> void:
 # Handles premature level endings, i.e. from revealing a hole
 func _end_level(cell : Cell) -> void:
 	EffectManager.create_hole_circle_effect(cell.get_global_position() + Vector2(4, 4))
-	var timer = get_tree().create_timer(2.0, false)
-	yield(timer, "timeout") # Wait until the circle effect ends
+	yield(get_tree().create_timer(2.0, false), "timeout") # Wait until the circle effect ends
 	
 	_board.queue_free() # Free current board
 	
@@ -71,6 +72,10 @@ func _finish_level() -> void:
 	_board.init_values(_current_level_data)
 	add_child(_board)
 	EventBus.emit_signal("level_ended")
+
+
+func _pause_game_state(paused : bool) -> void:
+	_game_state.paused = paused
 
 
 func _switch_level_data(level : int) -> void:

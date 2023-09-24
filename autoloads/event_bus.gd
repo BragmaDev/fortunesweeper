@@ -1,6 +1,10 @@
 extends Node
 
 
+# Common signals
+signal sequence_started # Used for animated sequences that pause the game state
+signal sequence_finished # Used for animated sequences that pause the game state
+
 # Game Manager signals
 signal level_ended
 
