@@ -3,10 +3,12 @@ extends Node
 
 
 signal appear_animation_finished
+signal disappear_animation_finished
 signal mining_animation_finished
 signal triggered_cell_mining(cell)
 
 var _appear_tween_duration = 0.6
+var _disappear_tween_duration = 1.0
 var _mine_delay = 0.2
 
 
@@ -28,6 +30,21 @@ func start_appear_animation(cells : Array) -> void:
 	# Start finishing timer
 	var timer = get_tree().create_timer(0.1 * (cells.size() + 1) + _appear_tween_duration)
 	timer.connect("timeout", self, "_finish_animation", ["appear_animation_finished"])
+
+
+func start_disappear_animation(cells : Array) -> void:
+	EventBus.emit_signal("sequence_started")
+	
+	for n in range(0, cells.size()):
+		for m in cells[n].size():
+			var cell = cells[n][m]
+			var final_pos = cell.get_position() - Vector2(150, 0)
+			var timer = get_tree().create_timer(0.1 * (m + 1), false)
+			timer.connect("timeout", self, "_tween_cell_to_position", [cell, final_pos, _disappear_tween_duration])
+	
+	# Start finishing timer
+	var timer = get_tree().create_timer(0.1 * (cells.size() + 1) + _disappear_tween_duration)
+	timer.connect("timeout", self, "_finish_animation", ["disappear_animation_finished"])
 
 
 func start_mining_animation(cells : Array) -> void:

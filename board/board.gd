@@ -18,13 +18,14 @@ onready var animator : BoardAnimator = $BoardAnimator
 
 func _ready() -> void:
 	EventBus.connect("finish_button_pressed", animator, "start_mining_animation", [_cells])
+	animator.connect("mining_animation_finished", animator, "start_disappear_animation", [_cells])
+	animator.connect("disappear_animation_finished", EventBus, "emit_signal", ["board_mined"])
+	animator.connect("triggered_cell_mining", self, "_mine_cell")
 	
 	set_global_position(_pos_offset)
 	_create_cells()
 	_update_flag_counts()
 	animator.start_appear_animation(_cells)
-	animator.connect("mining_animation_finished", EventBus, "emit_signal", ["board_mined"])
-	animator.connect("triggered_cell_mining", self, "_mine_cell")
 
 
 # Initializes counts for filled cells
