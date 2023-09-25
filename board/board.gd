@@ -12,6 +12,7 @@ var _initiated : bool = false
 var _hole_count : int
 var _gold_count : int
 var _diamond_count : int
+var _game_state : GameStateData = preload("res://common/game_state_data.tres")
 
 onready var animator : BoardAnimator = $BoardAnimator
 
@@ -121,14 +122,38 @@ func _get_cell_neighbors(row : int, col : int) -> Array:
 
 func _mine_cell(cell : Cell) -> void:
 	cell.set_state(Cell.States.MINED)
+	
+	# Incorrect flags
 	if cell.get_type() == Cell.Types.HOLE and not cell.get_flag() == Cell.Flags.HOLE:
-		EventBus.emit_signal("flagged_hole_wrong")
+		EffectManager.create_text_popup(
+				cell.global_position + Vector2(4, 4), 
+				Formatter.format_money_string(_game_state.HOLE_PENALTY), 
+				Colors.RED
+		)
 	
 	elif cell.get_type() == Cell.Types.GOLD and not cell.get_flag() == Cell.Flags.GOLD:
-		EventBus.emit_signal("flagged_treasure_wrong")
+		pass
 	
 	elif cell.get_type() == Cell.Types.DIAMOND and not cell.get_flag() == Cell.Flags.DIAMOND:
-		EventBus.emit_signal("flagged_treasure_wrong")
+		pass
+	
+	# Correct flags
+	elif cell.get_type() == Cell.Types.HOLE and cell.get_flag() == Cell.Flags.HOLE:
+		pass
+	
+	elif cell.get_type() == Cell.Types.GOLD and cell.get_flag() == Cell.Flags.GOLD:
+		EffectManager.create_text_popup(
+				cell.global_position + Vector2(4, 4), 
+				Formatter.format_money_string(_game_state.GOLD_VALUE), 
+				Colors.YELLOW
+		)
+	
+	elif cell.get_type() == Cell.Types.DIAMOND and cell.get_flag() == Cell.Flags.DIAMOND:
+		EffectManager.create_text_popup(
+				cell.global_position + Vector2(4, 4), 
+				Formatter.format_money_string(_game_state.DIAMOND_VALUE), 
+				Colors.LIGHT_BLUE
+		)
 
 
 func _on_cell_chorded(cell : Cell) -> void:
@@ -149,6 +174,8 @@ func _on_cell_chorded(cell : Cell) -> void:
 					and neighbor.get_flag() == Cell.Flags.NONE
 			):
 				_reveal_cell(neighbor)
+	
+	_check_completion()
 
 
 func _on_cell_flagged(cell : Cell) -> void:
@@ -227,6 +254,11 @@ func _reveal_cell(cell : Cell) -> void:
 		
 		if current.get_type() == Cell.Types.HOLE:
 			EventBus.emit_signal("revealed_hole", current)
+			EffectManager.create_text_popup(
+					current.global_position + Vector2(4, 4), 
+					Formatter.format_money_string(_game_state.HOLE_PENALTY), 
+					Colors.RED
+			)
 			return
 		
 		elif current.get_type() == Cell.Types.GOLD:

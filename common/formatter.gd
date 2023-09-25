@@ -14,6 +14,8 @@ static func format_time_string(time : float) -> String:
 
 static func format_money_string(money : int) -> String:
 	var string: String = str(money)
+	if string.begins_with("-"):
+		string.erase(0, 1)
 	var length: int = string.length()
 	var formatted: String
 	
@@ -22,5 +24,9 @@ static func format_money_string(money : int) -> String:
 			formatted = str(formatted, ",", string[i])
 		else:
 			formatted = str(formatted, string[i])
-
-	return "$" + formatted
+	
+	if money < 0:
+		formatted = "-$" + formatted
+	else:
+		formatted = "$" + formatted
+	return formatted

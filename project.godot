@@ -43,6 +43,11 @@ _global_script_classes=[ {
 "class": "GameStateData",
 "language": "GDScript",
 "path": "res://common/game_state_data.gd"
+}, {
+"base": "Node2D",
+"class": "TextPopup",
+"language": "GDScript",
+"path": "res://effects/text_popup.gd"
 } ]
 _global_script_class_icons={
 "Board": "",
@@ -51,7 +56,8 @@ _global_script_class_icons={
 "Cell": "",
 "Colors": "",
 "Formatter": "",
-"GameStateData": ""
+"GameStateData": "",
+"TextPopup": ""
 }
 
 [application]

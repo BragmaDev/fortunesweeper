@@ -9,7 +9,7 @@ signal triggered_cell_mining(cell)
 
 var _appear_tween_duration = 0.6
 var _disappear_tween_duration = 1.0
-var _mine_delay = 0.2
+var _mine_delay = 0.1
 
 
 func start_appear_animation(cells : Array) -> void:
@@ -29,7 +29,8 @@ func start_appear_animation(cells : Array) -> void:
 	
 	# Start finishing timer
 	var timer = get_tree().create_timer(0.1 * (cells.size() + 1) + _appear_tween_duration)
-	timer.connect("timeout", self, "_finish_animation", ["appear_animation_finished"])
+	timer.connect("timeout", self, "emit_signal", ["appear_animation_finished"])
+	timer.connect("timeout", EventBus, "emit_signal", ["sequence_finished"])
 
 
 func start_disappear_animation(cells : Array) -> void:
@@ -39,12 +40,12 @@ func start_disappear_animation(cells : Array) -> void:
 		for m in cells[n].size():
 			var cell = cells[n][m]
 			var final_pos = cell.get_position() - Vector2(150, 0)
-			var timer = get_tree().create_timer(0.1 * (m + 1), false)
+			var timer = get_tree().create_timer(0.07 * (n + m + 1), false)
 			timer.connect("timeout", self, "_tween_cell_to_position", [cell, final_pos, _disappear_tween_duration])
 	
 	# Start finishing timer
-	var timer = get_tree().create_timer(0.1 * (cells.size() + 1) + _disappear_tween_duration)
-	timer.connect("timeout", self, "_finish_animation", ["disappear_animation_finished"])
+	var timer = get_tree().create_timer(0.07 * (2 * cells.size() + 1) + _disappear_tween_duration)
+	timer.connect("timeout", self, "emit_signal", ["disappear_animation_finished"])
 
 
 func start_mining_animation(cells : Array) -> void:
@@ -64,12 +65,7 @@ func start_mining_animation(cells : Array) -> void:
 	
 	# Start finishing timer
 	var timer = get_tree().create_timer(_mine_delay * flagged_cells.size() + 1.0)
-	timer.connect("timeout", self, "_finish_animation", ["mining_animation_finished"])
-
-
-func _finish_animation(signal_name : String) -> void:
-	emit_signal(signal_name)
-	EventBus.emit_signal("sequence_finished")
+	timer.connect("timeout", self, "emit_signal", ["mining_animation_finished"])
 
 
 func _tween_cell_to_position(cell : Cell, pos : Vector2, duration : float) -> void:

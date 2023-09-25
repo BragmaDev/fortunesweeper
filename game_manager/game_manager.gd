@@ -41,10 +41,16 @@ func _end_level(cell : Cell) -> void:
 	EventBus.emit_signal("sequence_started")
 	EventBus.emit_signal("level_ended")
 	
+	_game_state.money += _game_state.HOLE_PENALTY
+	
 	EffectManager.create_hole_circle_effect(cell.get_global_position() + Vector2(4, 4))
 	yield(get_tree().create_timer(2.0, false), "timeout") # Wait until the circle effect ends
 	
 	_board.queue_free() # Free current board
+	
+	if _game_state.money < 0:
+		# Game over
+		return
 	
 	# Switch to the next level
 	_game_state.level += 1
@@ -59,15 +65,25 @@ func _end_level(cell : Cell) -> void:
 func _finish_level() -> void:
 	EventBus.emit_signal("level_ended")
 	
-	# Calculate rewards
+	# Calculate rewards and penalties
 	var correct_flags = _board.get_correct_flags()
 	for i in correct_flags["gold"]:
-		_game_state.money += 15000
+		_game_state.money += _game_state.GOLD_VALUE
 	for i in correct_flags["diamond"]:
-		_game_state.money += 60000
+		_game_state.money += _game_state.DIAMOND_VALUE
+	var incorrect_holes_count = _current_level_data.hole_count - correct_flags["hole"]
+	_game_state.money += _game_state.HOLE_PENALTY * incorrect_holes_count
+		
 		
 	_board.queue_free() # Free current board
 	
+	if _game_state.money < 0:
+		# Game over
+		return
+	elif _game_state.money >= 1000000:
+		# Game completed
+		return
+		
 	# Switch to the next level
 	_game_state.level += 1
 	_switch_level_data(_game_state.level)
