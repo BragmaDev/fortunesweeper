@@ -130,6 +130,7 @@ func _mine_cell(cell : Cell) -> void:
 				Formatter.format_money_string(_game_state.HOLE_PENALTY), 
 				Colors.RED
 		)
+		EventBus.emit_signal("hole_flagged_wrong")
 	
 	elif cell.get_type() == Cell.Types.GOLD and not cell.get_flag() == Cell.Flags.GOLD:
 		pass
@@ -147,6 +148,7 @@ func _mine_cell(cell : Cell) -> void:
 				Formatter.format_money_string(_game_state.GOLD_VALUE), 
 				Colors.YELLOW
 		)
+		EventBus.emit_signal("gold_flagged_right")
 	
 	elif cell.get_type() == Cell.Types.DIAMOND and cell.get_flag() == Cell.Flags.DIAMOND:
 		EffectManager.create_text_popup(
@@ -154,6 +156,7 @@ func _mine_cell(cell : Cell) -> void:
 				Formatter.format_money_string(_game_state.DIAMOND_VALUE), 
 				Colors.LIGHT_BLUE
 		)
+		EventBus.emit_signal("diamond_flagged_right")
 
 
 func _on_cell_chorded(cell : Cell) -> void:

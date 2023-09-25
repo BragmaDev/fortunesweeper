@@ -1,0 +1,202 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://interface/buttons/finish_button_pressed.png" type="Texture" id=1]
+[ext_resource path="res://interface/buttons/finish_button_normal.png" type="Texture" id=2]
+[ext_resource path="res://interface/buttons/finish_button_disabled.png" type="Texture" id=3]
+[ext_resource path="res://board/cell/flags.png" type="Texture" id=4]
+[ext_resource path="res://interface/sidebar.gd" type="Script" id=5]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 4 )
+region = Rect2( 8, 0, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 4 )
+region = Rect2( 16, 0, 8, 8 )
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("MoneyLabel:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 11 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MoneyLabel:custom_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.972549, 0.772549, 0.227451, 1 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "nudge_money_label_down"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("MoneyLabel:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.2 ),
+"transitions": PoolRealArray( 0.5, -2, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 11 ), Vector2( 0, 13 ), Vector2( 0, 11 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MoneyLabel:custom_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 0, 1 ),
+"update": 0,
+"values": [ Color( 0.886275, 0.447059, 0.521569, 1 ), Color( 0.972549, 0.772549, 0.227451, 1 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "nudge_money_label_up"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("MoneyLabel:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.2 ),
+"transitions": PoolRealArray( 0.5, -2, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 11 ), Vector2( 0, 9 ), Vector2( 0, 11 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MoneyLabel:custom_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 0, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.972549, 0.772549, 0.227451, 1 ) ]
+}
+
+[node name="Sidebar" type="Control"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -40.0
+script = ExtResource( 5 )
+
+[node name="TimerLabel" type="Label" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -40.0
+margin_bottom = 13.0
+custom_colors/font_color = Color( 0.34902, 0.341176, 0.341176, 1 )
+text = "0.000"
+align = 1
+
+[node name="MoneyLabel" type="Label" parent="."]
+margin_top = 11.0
+margin_right = 40.0
+margin_bottom = 24.0
+custom_colors/font_color = Color( 0.972549, 0.772549, 0.227451, 1 )
+text = "$1,000,000"
+align = 1
+
+[node name="FlagPanel" type="Panel" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -36.0
+margin_top = -35.0
+margin_right = -4.0
+margin_bottom = -25.0
+
+[node name="HoleFlagLabel" type="Label" parent="FlagPanel"]
+margin_left = 2.0
+margin_top = -3.0
+margin_right = 10.0
+margin_bottom = 10.0
+custom_colors/font_color = Color( 0.886275, 0.447059, 0.521569, 1 )
+text = "10"
+align = 1
+
+[node name="GoldFlagLabel" type="Label" parent="FlagPanel"]
+margin_left = 12.0
+margin_top = -3.0
+margin_right = 20.0
+margin_bottom = 10.0
+custom_colors/font_color = Color( 0.972549, 0.772549, 0.227451, 1 )
+text = "10"
+align = 1
+
+[node name="DiamondFlagLabel" type="Label" parent="FlagPanel"]
+margin_left = 22.0
+margin_top = -3.0
+margin_right = 30.0
+margin_bottom = 10.0
+custom_colors/font_color = Color( 0.815686, 1, 0.917647, 1 )
+text = "10"
+align = 1
+
+[node name="HoleFlagTexture" type="TextureRect" parent="FlagPanel"]
+margin_left = 2.0
+margin_top = -8.0
+margin_right = 10.0
+texture = SubResource( 1 )
+
+[node name="GoldFlagTexture" type="TextureRect" parent="FlagPanel"]
+margin_left = 12.0
+margin_top = -8.0
+margin_right = 20.0
+texture = SubResource( 2 )
+
+[node name="DiamondFlagTexture" type="TextureRect" parent="FlagPanel"]
+margin_left = 22.0
+margin_top = -8.0
+margin_right = 30.0
+texture = SubResource( 3 )
+
+[node name="FinishButton" type="TextureButton" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -36.0
+margin_top = -21.0
+margin_right = -4.0
+margin_bottom = -1.0
+disabled = true
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 1 )
+texture_disabled = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 4 )
+anims/nudge_money_label_down = SubResource( 6 )
+anims/nudge_money_label_up = SubResource( 5 )

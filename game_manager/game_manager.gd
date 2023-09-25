@@ -15,6 +15,9 @@ func _ready() -> void:
 	EventBus.connect("sequence_started", self, "_pause_game_state", [true])
 	EventBus.connect("sequence_finished", self, "_pause_game_state", [false])
 	EventBus.connect("revealed_hole", self, "_end_level")
+	EventBus.connect("hole_flagged_wrong", self, "_add_to_money", [_game_state.HOLE_PENALTY / 2])
+	EventBus.connect("gold_flagged_right", self, "_add_to_money", [_game_state.GOLD_VALUE])
+	EventBus.connect("diamond_flagged_right", self, "_add_to_money", [_game_state.DIAMOND_VALUE])
 	EventBus.connect("board_mined", self, "_finish_level")
 	
 	# Set up game state
@@ -41,7 +44,7 @@ func _end_level(cell : Cell) -> void:
 	EventBus.emit_signal("sequence_started")
 	EventBus.emit_signal("level_ended")
 	
-	_game_state.money += _game_state.HOLE_PENALTY
+	_add_to_money(_game_state.HOLE_PENALTY)
 	
 	EffectManager.create_hole_circle_effect(cell.get_global_position() + Vector2(4, 4))
 	yield(get_tree().create_timer(2.0, false), "timeout") # Wait until the circle effect ends
@@ -65,15 +68,14 @@ func _end_level(cell : Cell) -> void:
 func _finish_level() -> void:
 	EventBus.emit_signal("level_ended")
 	
-	# Calculate rewards and penalties
-	var correct_flags = _board.get_correct_flags()
-	for i in correct_flags["gold"]:
-		_game_state.money += _game_state.GOLD_VALUE
-	for i in correct_flags["diamond"]:
-		_game_state.money += _game_state.DIAMOND_VALUE
-	var incorrect_holes_count = _current_level_data.hole_count - correct_flags["hole"]
-	_game_state.money += _game_state.HOLE_PENALTY * incorrect_holes_count
-		
+	# Deprecated - Calculate rewards and penalties
+#	var correct_flags = _board.get_correct_flags()
+#	for i in correct_flags["gold"]:
+#		_add_to_money(_game_state.GOLD_VALUE)
+#	for i in correct_flags["diamond"]:
+#		_add_to_money(_game_state.DIAMOND_VALUE)
+#	var incorrect_holes_count = _current_level_data.hole_count - correct_flags["hole"]
+#	_add_to_money(_game_state.HOLE_PENALTY * incorrect_holes_count)
 		
 	_board.queue_free() # Free current board
 	
@@ -105,3 +107,14 @@ func _switch_level_data(level : int) -> void:
 			_current_level_data = LEVEL_2_BOARD_DATA
 		_:
 			_current_level_data = LEVEL_3_BOARD_DATA
+
+
+func _add_to_money(amount : int) -> void:
+	if amount == 0:
+		return
+	
+	_game_state.money += amount
+	if amount > 0:
+		EventBus.emit_signal("money_increased")
+	else:
+		EventBus.emit_signal("money_decreased")

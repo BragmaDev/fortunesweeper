@@ -7,6 +7,8 @@ signal sequence_finished # Used for animated sequences that pause the game state
 
 # Game Manager signals
 signal level_ended
+signal money_increased
+signal money_decreased
 
 # Board signals
 signal flag_counts_changed(hole_flags, gold_flags, diamond_flags)
