@@ -1,6 +1,8 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
 
-[node name="PauseMenu" type="Control"]
+[ext_resource path="res://interface/menus/BackgroundTilemap.tscn" type="PackedScene" id=1]
+
+[node name="GameOverScreen" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
@@ -15,37 +17,33 @@ anchor_bottom = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 margin_left = 40.0
-margin_top = 27.0
+margin_top = 36.0
 margin_right = 120.0
-margin_bottom = 92.0
+margin_bottom = 84.0
 rect_min_size = Vector2( 80, 0 )
 
 [node name="Label" type="RichTextLabel" parent="CenterContainer/VBoxContainer"]
 margin_right = 80.0
 margin_bottom = 14.0
 size_flags_horizontal = 3
-custom_colors/default_color = Color( 0.34902, 0.341176, 0.341176, 1 )
+custom_colors/default_color = Color( 0.886275, 0.447059, 0.521569, 1 )
 bbcode_enabled = true
-bbcode_text = "[center][wave amp=16 freq=3]GAME PAUSED"
-text = "GAME PAUSED"
+bbcode_text = "[center][shake rate=10 level=6]GAME OVER"
+text = "GAME OVER"
 fit_content_height = true
 scroll_active = false
 
-[node name="ResumeButton" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="RestartButton" type="Button" parent="CenterContainer/VBoxContainer"]
 margin_top = 18.0
 margin_right = 80.0
 margin_bottom = 31.0
-text = "Resume"
-
-[node name="RestartButton" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 35.0
-margin_right = 80.0
-margin_bottom = 48.0
 text = "Restart"
 
 [node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 52.0
+margin_top = 35.0
 margin_right = 80.0
-margin_bottom = 65.0
+margin_bottom = 48.0
 custom_colors/font_color_hover = Color( 0.972549, 0.772549, 0.227451, 1 )
 text = "Quit"
+
+[node name="BackgroundTilemap" parent="." instance=ExtResource( 1 )]
