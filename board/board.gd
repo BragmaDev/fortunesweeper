@@ -25,7 +25,7 @@ func _ready() -> void:
 	
 	set_global_position(_pos_offset)
 	_create_cells()
-	_update_flag_counts()
+	EventBus.emit_signal("board_flags_changed")
 	animator.start_appear_animation(_cells)
 
 
@@ -58,6 +58,24 @@ func get_correct_flags() -> Dictionary:
 	return correct_flags
 
 
+# Counts how many instances of specifics flags are left and returns a dictionary
+func get_flag_counts() -> Dictionary:
+	var hole_flags = _hole_count
+	var gold_flags = _gold_count
+	var diamond_flags = _diamond_count
+	
+	for row in _size:
+		for col in _size:
+			if _cells[row][col].get_flag() == Cell.Flags.HOLE:
+				hole_flags -= 1
+			elif _cells[row][col].get_flag() == Cell.Flags.GOLD:
+				gold_flags -= 1
+			elif _cells[row][col].get_flag() == Cell.Flags.DIAMOND:
+				diamond_flags -= 1
+	
+	return {"hole": hole_flags, "gold": gold_flags, "diamond": diamond_flags}
+
+
 # Checks if any of the cells is still unrevealed and unflagged
 func _check_completion() -> bool:
 	for row in _size:
@@ -83,7 +101,7 @@ func _create_cells() -> void:
 			cell.connect("pressed", self, "_on_cell_pressed", [cell])
 			cell.connect("chorded", self, "_on_cell_chorded", [cell])
 			cell.connect("flagged", self, "_on_cell_flagged", [cell])
-			cell.connect("flag_changed", self, "_update_flag_counts")
+			cell.connect("flag_changed", EventBus, "emit_signal", ["board_flags_changed"])
 			add_child(cell)
 			cell.set_position(Vector2(CELL_SIZE * col, CELL_SIZE * row))
 			_cells[row].append(cell)
@@ -194,7 +212,7 @@ func _on_cell_flagged(cell : Cell) -> void:
 	elif cell.get_flag() == Cell.Flags.DIAMOND:
 		cell.set_flag(Cell.Flags.NONE)
 	
-	_update_flag_counts()
+	EventBus.emit_signal("board_flags_changed")
 	_check_completion()
 
 
@@ -287,25 +305,6 @@ func _reveal_cell(cell : Cell) -> void:
 
 func _toggle(enabled : bool) -> void:
 	print("done")
-
-
-# Counts how many instances of specifics flags are left
-# Emits an EventBus signal with the results
-func _update_flag_counts() -> void:
-	var hole_flags = _hole_count
-	var gold_flags = _gold_count
-	var diamond_flags = _diamond_count
-	
-	for row in _size:
-		for col in _size:
-			if _cells[row][col].get_flag() == Cell.Flags.HOLE:
-				hole_flags -= 1
-			elif _cells[row][col].get_flag() == Cell.Flags.GOLD:
-				gold_flags -= 1
-			elif _cells[row][col].get_flag() == Cell.Flags.DIAMOND:
-				diamond_flags -= 1
-	
-	EventBus.emit_signal("flag_counts_changed", hole_flags, gold_flags, diamond_flags)
 
 
 func _update_neighbor_arrays() -> void:

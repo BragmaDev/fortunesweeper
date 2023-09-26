@@ -7,6 +7,10 @@ const GOLD_VALUE : int = 20000
 const DIAMOND_VALUE : int = 80000
 
 var level : int = 1
+var hole_flags_left : int = 0
+var gold_flags_left : int = 0
+var diamond_flags_left : int = 0
 var money : int = 0
 var time : float = 0.0
 var paused : bool = true
+

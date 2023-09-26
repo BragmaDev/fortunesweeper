@@ -9,13 +9,14 @@ signal sequence_finished # Used for animated sequences that pause the game state
 signal level_ended
 signal money_increased
 signal money_decreased
+signal flag_counts_changed
 
 # Board signals
-signal flag_counts_changed(hole_flags, gold_flags, diamond_flags)
 signal board_completion_checked(complete)
 signal revealed_hole(cell)
 signal revealed_gold(cell)
 signal revealed_diamond(cell)
+signal board_flags_changed
 signal hole_flagged_wrong
 signal treasure_flagged_wrong
 signal hole_flagged_right

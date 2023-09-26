@@ -19,6 +19,7 @@ func _ready() -> void:
 	EventBus.connect("gold_flagged_right", self, "_add_to_money", [_game_state.GOLD_VALUE])
 	EventBus.connect("diamond_flagged_right", self, "_add_to_money", [_game_state.DIAMOND_VALUE])
 	EventBus.connect("board_mined", self, "_finish_level")
+	EventBus.connect("board_flags_changed", self, "_update_flag_counts")
 	
 	# Set up game state
 	_game_state.level = 1
@@ -28,9 +29,7 @@ func _ready() -> void:
 	
 	# Set up board
 	_current_level_data = LEVEL_1_BOARD_DATA
-	_board = BOARD_SCENE.instance()
-	_board.init_values(_current_level_data)
-	add_child(_board)
+	_create_board()
 
 
 func _physics_process(delta : float) -> void:
@@ -38,6 +37,23 @@ func _physics_process(delta : float) -> void:
 	if not _game_state.paused:
 		_game_state.time += delta
 
+
+func _add_to_money(amount : int) -> void:
+	if amount == 0:
+		return
+	
+	_game_state.money += amount
+	if amount > 0:
+		EventBus.emit_signal("money_increased")
+	else:
+		EventBus.emit_signal("money_decreased")
+
+
+func _create_board() -> void:
+	_board = BOARD_SCENE.instance()
+	_board.init_values(_current_level_data)
+	add_child(_board)
+	
 
 # Handles premature level endings, i.e. from revealing a hole
 func _end_level(cell : Cell) -> void:
@@ -59,9 +75,7 @@ func _end_level(cell : Cell) -> void:
 	_game_state.level += 1
 	_switch_level_data(_game_state.level)
 	
-	_board = BOARD_SCENE.instance() # Instantiate new board
-	_board.init_values(_current_level_data)
-	add_child(_board)
+	_create_board()
 
 
 # Handles the normal end of the level, i.e. from clicking the finish button
@@ -90,9 +104,7 @@ func _finish_level() -> void:
 	_game_state.level += 1
 	_switch_level_data(_game_state.level)
 	
-	_board = BOARD_SCENE.instance() # Instantiate new board
-	_board.init_values(_current_level_data)
-	add_child(_board)
+	_create_board()
 
 
 func _pause_game_state(paused : bool) -> void:
@@ -109,12 +121,9 @@ func _switch_level_data(level : int) -> void:
 			_current_level_data = LEVEL_3_BOARD_DATA
 
 
-func _add_to_money(amount : int) -> void:
-	if amount == 0:
-		return
-	
-	_game_state.money += amount
-	if amount > 0:
-		EventBus.emit_signal("money_increased")
-	else:
-		EventBus.emit_signal("money_decreased")
+func _update_flag_counts() -> void:
+	var flags_left = _board.get_flag_counts()
+	_game_state.hole_flags_left = flags_left["hole"]
+	_game_state.gold_flags_left = flags_left["gold"]
+	_game_state.diamond_flags_left = flags_left["diamond"]
+	EventBus.emit_signal("flag_counts_changed")

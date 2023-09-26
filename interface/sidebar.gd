@@ -34,10 +34,10 @@ func _toggle_finish_button(enabled : bool) -> void:
 	finish_button.set_disabled(!enabled)
 
 
-func _update_flag_labels(hole_flags, gold_flags, diamond_flags) -> void:
-	hole_flag_label.set_text(str(hole_flags))
-	gold_flag_label.set_text(str(gold_flags))
-	diamond_flag_label.set_text(str(diamond_flags))
+func _update_flag_labels() -> void:
+	hole_flag_label.set_text(str(_game_state.hole_flags_left))
+	gold_flag_label.set_text(str(_game_state.gold_flags_left))
+	diamond_flag_label.set_text(str(_game_state.diamond_flags_left))
 
 
 func _update_money_label(animated : bool, increased : bool = true) -> void:
