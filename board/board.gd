@@ -141,25 +141,28 @@ func _get_cell_neighbors(row : int, col : int) -> Array:
 func _mine_cell(cell : Cell) -> void:
 	cell.set_state(Cell.States.MINED)
 	
-	# Incorrect flags
+	# Incorrectly flagged hole cell
 	if cell.get_type() == Cell.Types.HOLE and not cell.get_flag() == Cell.Flags.HOLE:
 		EffectManager.create_text_popup(
 				cell.global_position + Vector2(4, 4), 
-				Formatter.format_money_string(_game_state.HOLE_PENALTY), 
+				Formatter.format_money_string(_game_state.HOLE_MINE_PENALTY), 
 				Colors.RED
 		)
 		EventBus.emit_signal("hole_flagged_wrong")
 	
+	# Incorrectly flagged gold cell
 	elif cell.get_type() == Cell.Types.GOLD and not cell.get_flag() == Cell.Flags.GOLD:
 		pass
-	
+
+	# Incorrectly flagged diamond cell
 	elif cell.get_type() == Cell.Types.DIAMOND and not cell.get_flag() == Cell.Flags.DIAMOND:
 		pass
 	
-	# Correct flags
+	# Correctly flagged hole cell
 	elif cell.get_type() == Cell.Types.HOLE and cell.get_flag() == Cell.Flags.HOLE:
 		pass
 	
+	# Correctly flagged gold cell
 	elif cell.get_type() == Cell.Types.GOLD and cell.get_flag() == Cell.Flags.GOLD:
 		EffectManager.create_text_popup(
 				cell.global_position + Vector2(4, 4), 
@@ -168,6 +171,7 @@ func _mine_cell(cell : Cell) -> void:
 		)
 		EventBus.emit_signal("gold_flagged_right")
 	
+	# Correctly flagged diamond cell
 	elif cell.get_type() == Cell.Types.DIAMOND and cell.get_flag() == Cell.Flags.DIAMOND:
 		EffectManager.create_text_popup(
 				cell.global_position + Vector2(4, 4), 
@@ -182,12 +186,16 @@ func _on_cell_chorded(cell : Cell) -> void:
 		return
 	
 	# Check that neighboring cells have the correct number of flags placed
+	# Revealed filled neighbors count as well
 	var flagged_neighbors = 0
+	var revealed_filled_neighbors = 0
 	for neighbor in cell.get_neighbors():
 		if not neighbor.get_flag() == Cell.Flags.NONE:
 			flagged_neighbors += 1
+		elif not neighbor.get_type() == Cell.Types.EMPTY and neighbor.get_state() == Cell.States.REVEALED:
+			revealed_filled_neighbors += 1
 	
-	if flagged_neighbors == cell.get_filled_nb_count():
+	if flagged_neighbors + revealed_filled_neighbors == cell.get_filled_nb_count():
 		# Reveal all surrounding cells that aren't flagged
 		for neighbor in cell.get_neighbors():
 			if (
@@ -200,17 +208,27 @@ func _on_cell_chorded(cell : Cell) -> void:
 
 
 func _on_cell_flagged(cell : Cell) -> void:
-	if cell.get_flag() == Cell.Flags.NONE:
-		cell.set_flag(Cell.Flags.HOLE)
+	var flag = cell.get_flag()
 	
-	elif cell.get_flag() == Cell.Flags.HOLE:
-		cell.set_flag(Cell.Flags.GOLD)
-	
-	elif cell.get_flag() == Cell.Flags.GOLD:
-		cell.set_flag(Cell.Flags.DIAMOND)
-	
-	elif cell.get_flag() == Cell.Flags.DIAMOND:
-		cell.set_flag(Cell.Flags.NONE)
+	# Cycle through flag types and apply the next available one
+	# If no flags are available, remove the flag
+	while flag <= Cell.Flags.size():
+		flag += 1
+		
+		if flag == Cell.Flags.HOLE and _game_state.hole_flags_left > 0:
+			cell.set_flag(Cell.Flags.HOLE)
+			break
+		
+		elif flag == Cell.Flags.GOLD and _game_state.gold_flags_left > 0:
+			cell.set_flag(Cell.Flags.GOLD)
+			break
+		
+		elif flag == Cell.Flags.DIAMOND and _game_state.diamond_flags_left > 0:
+			cell.set_flag(Cell.Flags.DIAMOND)
+			break
+		
+		elif flag >= Cell.Flags.size():
+			cell.set_flag(Cell.Flags.NONE)
 	
 	EventBus.emit_signal("board_flags_changed")
 	_check_completion()
@@ -274,6 +292,8 @@ func _reveal_cell(cell : Cell) -> void:
 		current.set_state(Cell.States.REVEALED)
 		
 		if current.get_type() == Cell.Types.HOLE:
+			_hole_count -= 1
+			EventBus.emit_signal("board_flags_changed")
 			EventBus.emit_signal("revealed_hole", current)
 			EffectManager.create_text_popup(
 					current.global_position + Vector2(4, 4), 
@@ -283,11 +303,13 @@ func _reveal_cell(cell : Cell) -> void:
 			return
 		
 		elif current.get_type() == Cell.Types.GOLD:
-			EventBus.emit_signal("revealed_gold", current)
+			_gold_count -= 1
+			EventBus.emit_signal("board_flags_changed")
 			return
 			
 		elif current.get_type() == Cell.Types.DIAMOND:
-			EventBus.emit_signal("revealed_diamond", current)
+			_diamond_count -= 1
+			EventBus.emit_signal("board_flags_changed")
 			return
 		
 		# Add surrounding empty cells to reveal queue
@@ -301,10 +323,6 @@ func _reveal_cell(cell : Cell) -> void:
 					queue.push_back(neighbor)
 				
 				visited.append(neighbor)
-
-
-func _toggle(enabled : bool) -> void:
-	print("done")
 
 
 func _update_neighbor_arrays() -> void:

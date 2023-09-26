@@ -3,6 +3,7 @@ extends Resource
 
 
 const HOLE_PENALTY : int = -100000
+const HOLE_MINE_PENALTY : int = -50000
 const GOLD_VALUE : int = 20000
 const DIAMOND_VALUE : int = 80000
 
