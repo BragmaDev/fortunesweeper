@@ -28,7 +28,7 @@ func start_appear_animation(cells : Array) -> void:
 			timer.connect("timeout", self, "_tween_cell_to_position", [cell, final_pos, _appear_tween_duration])
 	
 	# Start finishing timer
-	var timer = get_tree().create_timer(0.1 * (cells.size() + 1) + _appear_tween_duration)
+	var timer = get_tree().create_timer(0.1 * (cells.size() + 1) + _appear_tween_duration, false)
 	timer.connect("timeout", self, "emit_signal", ["appear_animation_finished"])
 	timer.connect("timeout", EventBus, "emit_signal", ["sequence_finished"])
 

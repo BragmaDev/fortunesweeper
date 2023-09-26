@@ -44,6 +44,9 @@ func _update_money_label(animated : bool, increased : bool = true) -> void:
 	var string = Formatter.format_money_string(_game_state.money)
 	money_label.set_text(string)
 	anim.stop()
+	if not animated:
+		return
+		
 	if increased:
 		anim.play("nudge_money_label_up")
 	else:

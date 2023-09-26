@@ -4,7 +4,7 @@
 [ext_resource path="res://interface/buttons/finish_button_normal.png" type="Texture" id=2]
 [ext_resource path="res://interface/buttons/finish_button_disabled.png" type="Texture" id=3]
 [ext_resource path="res://board/cell/flags.png" type="Texture" id=4]
-[ext_resource path="res://interface/sidebar.gd" type="Script" id=5]
+[ext_resource path="res://interface/gameplay/sidebar.gd" type="Script" id=5]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 4 )

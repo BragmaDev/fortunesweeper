@@ -5,6 +5,7 @@ const BOARD_SCENE : PackedScene = preload("res://board/Board.tscn")
 const LEVEL_1_BOARD_DATA : BoardData = preload("res://board/level_board_data/level_1.tres")
 const LEVEL_2_BOARD_DATA : BoardData = preload("res://board/level_board_data/level_2.tres")
 const LEVEL_3_BOARD_DATA : BoardData = preload("res://board/level_board_data/level_3.tres")
+const LEVEL_4_BOARD_DATA : BoardData = preload("res://board/level_board_data/level_4.tres")
 
 var _board : Board
 var _current_level_data : BoardData
@@ -21,6 +22,8 @@ func _ready() -> void:
 	EventBus.connect("board_mined", self, "_finish_level")
 	EventBus.connect("board_flags_changed", self, "_update_flag_counts")
 	
+	get_tree().set_pause(false)
+	
 	# Set up game state
 	_game_state.level = 1
 	_game_state.money = 0
@@ -30,6 +33,7 @@ func _ready() -> void:
 	# Set up board
 	_current_level_data = LEVEL_1_BOARD_DATA
 	_create_board()
+	EventBus.emit_signal("level_started")
 
 
 func _physics_process(delta : float) -> void:
@@ -76,6 +80,7 @@ func _end_level(cell : Cell) -> void:
 	_switch_level_data(_game_state.level)
 	
 	_create_board()
+	EventBus.emit_signal("level_started")
 
 
 # Handles the normal end of the level, i.e. from clicking the finish button
@@ -105,6 +110,7 @@ func _finish_level() -> void:
 	_switch_level_data(_game_state.level)
 	
 	_create_board()
+	EventBus.emit_signal("level_started")
 
 
 func _pause_game_state(paused : bool) -> void:
@@ -117,8 +123,10 @@ func _switch_level_data(level : int) -> void:
 			_current_level_data = LEVEL_1_BOARD_DATA
 		2:
 			_current_level_data = LEVEL_2_BOARD_DATA
-		_:
+		3:
 			_current_level_data = LEVEL_3_BOARD_DATA
+		_:
+			_current_level_data = LEVEL_4_BOARD_DATA
 
 
 func _update_flag_counts() -> void:
