@@ -88,22 +88,15 @@ func _end_level(cell : Cell) -> void:
 func _finish_level() -> void:
 	EventBus.emit_signal("level_ended")
 	
-	# Deprecated - Calculate rewards and penalties
-#	var correct_flags = _board.get_correct_flags()
-#	for i in correct_flags["gold"]:
-#		_add_to_money(_game_state.GOLD_VALUE)
-#	for i in correct_flags["diamond"]:
-#		_add_to_money(_game_state.DIAMOND_VALUE)
-#	var incorrect_holes_count = _current_level_data.hole_count - correct_flags["hole"]
-#	_add_to_money(_game_state.HOLE_PENALTY * incorrect_holes_count)
-		
 	_board.queue_free() # Free current board
 	
 	if _game_state.money < 0:
 		# Game over
+		SceneManager.change_scene(SceneManager.GAME_OVER_SCENE_PATH)
 		return
 	elif _game_state.money >= 1000000:
 		# Game completed
+		SceneManager.change_scene(SceneManager.WIN_SCENE_PATH)
 		return
 		
 	# Switch to the next level

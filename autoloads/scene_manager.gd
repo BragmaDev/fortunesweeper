@@ -3,6 +3,7 @@ extends Node
 
 const MAIN_SCENE_PATH = "res://Main.tscn"
 const GAME_OVER_SCENE_PATH = "res://interface/menus/GameOverScreen.tscn"
+const WIN_SCENE_PATH = "res://interface/menus/WinScreen.tscn"
 
 
 func change_scene(scene_path : String) -> void:
