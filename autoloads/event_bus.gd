@@ -27,3 +27,5 @@ signal board_mined
 
 # Interface signals
 signal finish_button_pressed
+signal restart_button_pressed
+signal quit_button_pressed

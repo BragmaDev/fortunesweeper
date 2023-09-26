@@ -21,6 +21,7 @@ func _ready() -> void:
 	EventBus.connect("diamond_flagged_right", self, "_add_to_money", [_game_state.DIAMOND_VALUE])
 	EventBus.connect("board_mined", self, "_finish_level")
 	EventBus.connect("board_flags_changed", self, "_update_flag_counts")
+	EventBus.connect("restart_button_pressed", self, "_reset")
 	
 	get_tree().set_pause(false)
 	
@@ -115,6 +116,16 @@ func _finish_level() -> void:
 
 func _pause_game_state(paused : bool) -> void:
 	_game_state.paused = paused
+
+
+func _reset() -> void:
+	# Set up game state
+	_game_state.level = 1
+	_game_state.money = 0
+	_game_state.time = 0.0
+	_game_state.paused = false
+	
+	get_tree().reload_current_scene()
 
 
 func _switch_level_data(level : int) -> void:
