@@ -73,6 +73,7 @@ func _end_level(cell : Cell) -> void:
 	_board.queue_free() # Free current board
 	
 	if _game_state.game_over == true:
+		SceneManager.change_scene(SceneManager.GAME_OVER_SCENE_PATH)
 		return
 	
 	# Switch to the next level

@@ -4,7 +4,6 @@ extends CanvasLayer
 var _game_state : GameStateData = preload("res://common/game_state_data.tres")
 
 onready var anim : AnimationPlayer = $AnimationPlayer
-onready var transition : TransitionRect = $TransitionRect
 
 
 func _ready() -> void:
@@ -12,7 +11,7 @@ func _ready() -> void:
 	EventBus.connect("sequence_finished", self, "_toggle_mouse_blocker", [false])
 	EventBus.connect("level_started", anim, "play", ["show_level_sign"])
 
-	transition.start_transition_in()
+	EventBus.emit_signal("transition_in_triggered")
 
 
 func _toggle_mouse_blocker(enabled : bool) -> void:

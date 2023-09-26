@@ -9,6 +9,7 @@ func _ready() -> void:
 
 
 func start_transition_in(duration : float = 0.7) -> void:
+	show()
 	material.set("shader_param/cutoff", 1.0)
 	material.set("shader_param/flipped", 0.0)
 	
@@ -17,6 +18,7 @@ func start_transition_in(duration : float = 0.7) -> void:
 
 
 func start_transition_out(duration : float = 0.7) -> void:
+	show()
 	material.set("shader_param/cutoff", 0.0)
 	material.set("shader_param/flipped", 1.0)
 	
