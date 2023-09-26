@@ -31,6 +31,11 @@ func _physics_process(_delta : float) -> void:
 
 
 func _toggle_finish_button(enabled : bool) -> void:
+	# Disable button and return immediately if the game is over
+	if _game_state.game_over:
+		finish_button.set_disabled(true)
+		return
+	
 	finish_button.set_disabled(!enabled)
 
 

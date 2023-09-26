@@ -14,4 +14,5 @@ var diamond_flags_left : int = 0
 var money : int = 0
 var time : float = 0.0
 var paused : bool = true
+var game_over : bool = false
 

@@ -26,10 +26,7 @@ func _ready() -> void:
 	get_tree().set_pause(false)
 	
 	# Set up game state
-	_game_state.level = 1
-	_game_state.money = 0
-	_game_state.time = 0.0
-	_game_state.paused = false
+	_reset_game_state()
 	
 	# Set up board
 	_current_level_data = LEVEL_1_BOARD_DATA
@@ -66,14 +63,16 @@ func _end_level(cell : Cell) -> void:
 	EventBus.emit_signal("level_ended")
 	
 	_add_to_money(_game_state.HOLE_PENALTY)
+	# Check game over condition
+	if _game_state.money < 0:
+		_game_state.game_over = true
 	
 	EffectManager.create_hole_circle_effect(cell.get_global_position() + Vector2(4, 4))
 	yield(get_tree().create_timer(2.0, false), "timeout") # Wait until the circle effect ends
 	
 	_board.queue_free() # Free current board
 	
-	if _game_state.money < 0:
-		# Game over
+	if _game_state.game_over == true:
 		return
 	
 	# Switch to the next level
@@ -118,14 +117,13 @@ func _pause_game_state(paused : bool) -> void:
 	_game_state.paused = paused
 
 
-func _reset() -> void:
-	# Set up game state
+func _reset_game_state() -> void:
+	# Reset game state
 	_game_state.level = 1
 	_game_state.money = 0
 	_game_state.time = 0.0
-	_game_state.paused = false
-	
-	get_tree().reload_current_scene()
+	_game_state.paused = true
+	_game_state.game_over = false
 
 
 func _switch_level_data(level : int) -> void:

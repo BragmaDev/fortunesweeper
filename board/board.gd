@@ -144,7 +144,7 @@ func _mine_cell(cell : Cell) -> void:
 	# Incorrectly flagged hole cell
 	if cell.get_type() == Cell.Types.HOLE and not cell.get_flag() == Cell.Flags.HOLE:
 		EffectManager.create_text_popup(
-				cell.global_position + Vector2(4, 4), 
+				cell.global_position + Vector2(4, 0), 
 				Formatter.format_money_string(_game_state.HOLE_MINE_PENALTY), 
 				Colors.RED
 		)
@@ -165,7 +165,7 @@ func _mine_cell(cell : Cell) -> void:
 	# Correctly flagged gold cell
 	elif cell.get_type() == Cell.Types.GOLD and cell.get_flag() == Cell.Flags.GOLD:
 		EffectManager.create_text_popup(
-				cell.global_position + Vector2(4, 4), 
+				cell.global_position + Vector2(4, 0), 
 				Formatter.format_money_string(_game_state.GOLD_VALUE), 
 				Colors.YELLOW
 		)
@@ -174,7 +174,7 @@ func _mine_cell(cell : Cell) -> void:
 	# Correctly flagged diamond cell
 	elif cell.get_type() == Cell.Types.DIAMOND and cell.get_flag() == Cell.Flags.DIAMOND:
 		EffectManager.create_text_popup(
-				cell.global_position + Vector2(4, 4), 
+				cell.global_position + Vector2(4, 0), 
 				Formatter.format_money_string(_game_state.DIAMOND_VALUE), 
 				Colors.LIGHT_BLUE
 		)
@@ -296,7 +296,7 @@ func _reveal_cell(cell : Cell) -> void:
 			EventBus.emit_signal("board_flags_changed")
 			EventBus.emit_signal("revealed_hole", current)
 			EffectManager.create_text_popup(
-					current.global_position + Vector2(4, 4), 
+					current.global_position + Vector2(4, 0), 
 					Formatter.format_money_string(_game_state.HOLE_PENALTY), 
 					Colors.RED
 			)
