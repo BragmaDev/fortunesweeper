@@ -78,6 +78,7 @@ RNG="*res://autoloads/rng.gd"
 EventBus="*res://autoloads/event_bus.gd"
 EffectManager="*res://autoloads/effect_manager.gd"
 SceneManager="*res://autoloads/scene_manager.gd"
+SaveData="*res://autoloads/save_data.gd"
 
 [debug]
 

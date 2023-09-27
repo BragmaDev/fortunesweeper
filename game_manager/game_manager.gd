@@ -96,6 +96,7 @@ func _finish_level() -> void:
 		return
 	elif _game_state.money >= 1000000:
 		# Game completed
+		EventBus.emit_signal("game_won")
 		SceneManager.change_scene(SceneManager.WIN_SCENE_PATH)
 		return
 		

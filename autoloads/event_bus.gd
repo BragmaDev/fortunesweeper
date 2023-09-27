@@ -16,6 +16,7 @@ signal level_started
 signal money_increased
 signal money_decreased
 signal flag_counts_changed
+signal game_won
 
 # Board signals
 signal board_completion_checked(complete)
