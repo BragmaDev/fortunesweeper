@@ -69,7 +69,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Fortunesweeper"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://interface/menus/MainMenu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -78,6 +78,11 @@ RNG="*res://autoloads/rng.gd"
 EventBus="*res://autoloads/event_bus.gd"
 EffectManager="*res://autoloads/effect_manager.gd"
 SceneManager="*res://autoloads/scene_manager.gd"
+
+[debug]
+
+gdscript/warnings/unused_signal=false
+gdscript/warnings/return_value_discarded=false
 
 [display]
 

@@ -15,7 +15,7 @@ func _ready() -> void:
 		button.connect("pressed", self, "_disable_buttons")
 	
 	restart_button.connect("pressed", SceneManager, "change_scene", [SceneManager.MAIN_SCENE_PATH])
-	quit_button.connect("pressed", SceneManager, "change_scene", [SceneManager.MAIN_SCENE_PATH])
+	quit_button.connect("pressed", SceneManager, "change_scene", [SceneManager.MAIN_MENU_SCENE_PATH])
 	
 	level_result.set_text("Level " + str(_game_state.level))
 	time_result.set_text(Formatter.format_time_string(_game_state.time))

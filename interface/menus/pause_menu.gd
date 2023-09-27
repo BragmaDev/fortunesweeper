@@ -13,9 +13,9 @@ func _ready() -> void:
 		button.connect("pressed", self, "_disable")
 	
 	resume_button.connect("pressed", self, "toggle", [false])
-	restart_button.connect(
-			"pressed", SceneManager, "change_scene", [SceneManager.MAIN_SCENE_PATH]
-	)
+	restart_button.connect("pressed", SceneManager, "change_scene", [SceneManager.MAIN_SCENE_PATH])
+	quit_button.connect("pressed", SceneManager, "change_scene", [SceneManager.MAIN_MENU_SCENE_PATH])
+	
 	_disabled = false
 
 

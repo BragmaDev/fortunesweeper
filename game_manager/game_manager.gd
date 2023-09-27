@@ -16,7 +16,7 @@ func _ready() -> void:
 	EventBus.connect("sequence_started", self, "_pause_game_state", [true])
 	EventBus.connect("sequence_finished", self, "_pause_game_state", [false])
 	EventBus.connect("revealed_hole", self, "_end_level")
-	EventBus.connect("hole_flagged_wrong", self, "_add_to_money", [_game_state.HOLE_PENALTY / 2])
+	EventBus.connect("hole_flagged_wrong", self, "_add_to_money", [_game_state.HOLE_PENALTY / 2.0])
 	EventBus.connect("gold_flagged_right", self, "_add_to_money", [_game_state.GOLD_VALUE])
 	EventBus.connect("diamond_flagged_right", self, "_add_to_money", [_game_state.DIAMOND_VALUE])
 	EventBus.connect("board_mined", self, "_finish_level")
