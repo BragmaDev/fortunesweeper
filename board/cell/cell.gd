@@ -110,6 +110,7 @@ func set_state(state : int) -> void:
 	elif _state == States.REVEALED:
 		sprite.set_animation("revealed")
 		$CPUParticles2D.set_emitting(true)
+		AudioManager.play("cell_reveal")
 		# Remove flag automatically
 		set_flag(Flags.NONE)
 		emit_signal("flag_changed")
@@ -118,6 +119,7 @@ func set_state(state : int) -> void:
 		sprite.set_animation("revealed")
 		flag_sprite.set_animation("none")
 		$CPUParticles2D.set_emitting(true)
+		AudioManager.play("cell_reveal")
 	
 	_update_content_sprite()
 	
