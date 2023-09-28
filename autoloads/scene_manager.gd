@@ -13,6 +13,7 @@ func change_scene(scene_path : String) -> void:
 
 	var timer = get_tree().create_timer(duration)
 	timer.connect("timeout", get_tree(), "change_scene", [scene_path])
+	set_pause(false)
 
 
 func set_pause(paused : bool) -> void:

@@ -15,7 +15,7 @@ func _ready() -> void:
 		# Set up AudioStreamPlayer
 		var player = AudioStreamPlayer.new()
 		add_child(player)
-		player.bus = _sfx_bus
+		player.set_bus(_sfx_bus)
 		player.set_stream(load(sfx[sound]))
 		
 		_pool.append({"player": player, "sound": sound})

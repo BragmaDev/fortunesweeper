@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/level_sign.png-12c5b93e0053a7dbb0f85f5713f52a29.stex"
+path="res://.import/sound_volume_icon.png-1708dac20aa2a21070fa794c57ee88a0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://interface/gameplay/level_sign.png"
-dest_files=[ "res://.import/level_sign.png-12c5b93e0053a7dbb0f85f5713f52a29.stex" ]
+source_file="res://interface/textures/sound_volume_icon.png"
+dest_files=[ "res://.import/sound_volume_icon.png-1708dac20aa2a21070fa794c57ee88a0.stex" ]
 
 [params]
 

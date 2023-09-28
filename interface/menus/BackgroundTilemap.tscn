@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://interface/menus/background_tiles.png" type="Texture" id=1]
+[ext_resource path="res://interface/textures/background_tiles.png" type="Texture" id=1]
 
 [sub_resource type="TileSet" id=1]
 1/name = "background_tiles.png 1"

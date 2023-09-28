@@ -5,6 +5,7 @@ onready var start_button : Button = $CanvasLayer/CenterContainer/VBoxContainer/S
 onready var help_button : Button = $CanvasLayer/CenterContainer/VBoxContainer/HelpButton
 onready var credits_button : Button = $CanvasLayer/CenterContainer/VBoxContainer/CreditsButton
 onready var quit_button : Button = $CanvasLayer/CenterContainer/VBoxContainer/QuitButton
+onready var sound_vol_slider : HSlider = $CanvasLayer/SoundVolumeSlider
 
 
 func _ready() -> void:
@@ -13,6 +14,7 @@ func _ready() -> void:
 	
 	start_button.connect("pressed", SceneManager, "change_scene", [SceneManager.MAIN_SCENE_PATH])
 	quit_button.connect("pressed", SceneManager, "quit_game")
+	sound_vol_slider.connect("value_changed", Options, "set_sound_volume")
 	
 	EventBus.emit_signal("transition_in_triggered")
 
