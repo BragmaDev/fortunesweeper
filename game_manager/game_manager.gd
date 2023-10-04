@@ -22,6 +22,7 @@ func _ready() -> void:
 	EventBus.connect("board_mined", self, "_finish_level")
 	EventBus.connect("board_flags_changed", self, "_update_flag_counts")
 	EventBus.connect("restart_button_pressed", self, "_reset")
+	EventBus.connect("bat_collided", self, "_add_to_money", [_game_state.BAT_PENALTY])
 	
 	get_tree().set_pause(false)
 	
