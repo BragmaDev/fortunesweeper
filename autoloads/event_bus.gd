@@ -17,6 +17,7 @@ signal money_increased
 signal money_decreased
 signal flag_counts_changed
 signal game_won
+signal game_state_reset
 
 # Board signals
 signal board_completion_checked(complete)

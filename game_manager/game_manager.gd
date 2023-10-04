@@ -120,6 +120,7 @@ func _reset_game_state() -> void:
 	_game_state.time = 0.0
 	_game_state.paused = true
 	_game_state.game_over = false
+	EventBus.emit_signal("game_state_reset")
 
 
 func _switch_level_data(level : int) -> void:

@@ -19,6 +19,7 @@ func _ready() -> void:
 	EventBus.connect("level_ended", self, "_toggle_finish_button", [false])
 	EventBus.connect("money_increased", self, "_update_money_label", [true, true])
 	EventBus.connect("money_decreased", self, "_update_money_label", [true, false])
+	EventBus.connect("game_state_reset", self, "_update_money_label", [false])
 	
 	_update_money_label(false)
 	_toggle_finish_button(false)
