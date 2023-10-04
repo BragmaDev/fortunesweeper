@@ -48,8 +48,10 @@ func _add_to_money(amount : int) -> void:
 	_game_state.money += amount
 	if amount > 0:
 		EventBus.emit_signal("money_increased")
+		AudioManager.play("money_increase")
 	else:
 		EventBus.emit_signal("money_decreased")
+		AudioManager.play("buzzer")
 
 
 func _create_board() -> void:

@@ -2,7 +2,10 @@ extends Node
 
 
 var sfx = {
-		"cell_reveal": "res://sfx/cell_reveal.wav"
+		"buzzer": "res://sfx/buzzer.wav",
+		"cell_reveal": "res://sfx/cell_reveal.wav",
+		"hole_fall": "res://sfx/hole_fall.wav",
+		"money_increase": "res://sfx/money_increase.wav",
 }
 
 var _sfx_bus : String = "SFX"
@@ -43,3 +46,4 @@ func play(
 	player.set_pitch_scale(pitch)
 	
 	player.play()
+	

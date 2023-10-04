@@ -152,11 +152,11 @@ func _mine_cell(cell : Cell) -> void:
 	
 	# Incorrectly flagged gold cell
 	elif cell.get_type() == Cell.Types.GOLD and not cell.get_flag() == Cell.Flags.GOLD:
-		pass
+		AudioManager.play("buzzer")
 
 	# Incorrectly flagged diamond cell
 	elif cell.get_type() == Cell.Types.DIAMOND and not cell.get_flag() == Cell.Flags.DIAMOND:
-		pass
+		AudioManager.play("buzzer")
 	
 	# Correctly flagged hole cell
 	elif cell.get_type() == Cell.Types.HOLE and cell.get_flag() == Cell.Flags.HOLE:

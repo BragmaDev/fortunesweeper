@@ -9,6 +9,11 @@ func create_hole_circle_effect(pos : Vector2) -> void:
 	var effect = HOLE_CIRCLE_EFFECT_SCENE.instance()
 	get_tree().get_current_scene().add_child(effect)
 	effect.set_global_position(pos)
+	
+	# Play delayed sound effect
+	get_tree().create_timer(0.8, false).connect("timeout", AudioManager, "play", [
+			"hole_fall", 1.0, false 
+	])
 
 
 func create_text_popup(pos : Vector2, text : String, color : Color) -> void:
