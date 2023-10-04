@@ -31,6 +31,9 @@ signal gold_flagged_right
 signal diamond_flagged_right
 signal board_mined
 
+# Enemy signals
+signal bat_collided
+
 # Interface signals
 signal finish_button_pressed
 signal restart_button_pressed

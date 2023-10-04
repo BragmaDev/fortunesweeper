@@ -110,6 +110,11 @@ anchor_bottom = 1.0
 margin_left = -40.0
 script = ExtResource( 5 )
 
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0901961, 0.0823529, 0.0862745, 1 )
+
 [node name="TimerLabel" type="Label" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
