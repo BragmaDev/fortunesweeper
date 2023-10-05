@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://interface/menus/BackgroundTilemap.tscn" type="PackedScene" id=1]
 [ext_resource path="res://interface/menus/main_menu.gd" type="Script" id=2]
 [ext_resource path="res://effects/TransitionRect.tscn" type="PackedScene" id=3]
+[ext_resource path="res://interface/textures/pb_icon.png" type="Texture" id=4]
 [ext_resource path="res://interface/textures/sound_volume_icon.png" type="Texture" id=6]
 
 [node name="MainMenu" type="Node2D"]
@@ -68,6 +69,22 @@ margin_left = -9.0
 margin_right = -1.0
 margin_bottom = 8.0
 texture = ExtResource( 6 )
+
+[node name="PBLabel" type="Label" parent="CanvasLayer"]
+margin_left = 109.0
+margin_top = 5.0
+margin_right = 152.0
+margin_bottom = 18.0
+custom_colors/font_color = Color( 0.34902, 0.341176, 0.341176, 1 )
+text = "--:--.--"
+align = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/PBLabel"]
+margin_left = 5.0
+margin_top = 3.0
+margin_right = 13.0
+margin_bottom = 11.0
+texture = ExtResource( 4 )
 
 [node name="TransitionRect" parent="CanvasLayer" instance=ExtResource( 3 )]
 

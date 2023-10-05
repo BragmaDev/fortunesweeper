@@ -4,7 +4,7 @@ extends Node
 
 static func format_time_string(time : float) -> String:
 	if time <= 0:
-		return ""
+		return "--:--.--"
 	
 	var time_min = max(int(time / 60), 0)
 	var time_sec = max(int(time) % 60, 0)

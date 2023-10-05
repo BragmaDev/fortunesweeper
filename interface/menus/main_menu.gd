@@ -6,6 +6,7 @@ onready var help_button : Button = $CanvasLayer/CenterContainer/VBoxContainer/He
 onready var credits_button : Button = $CanvasLayer/CenterContainer/VBoxContainer/CreditsButton
 onready var quit_button : Button = $CanvasLayer/CenterContainer/VBoxContainer/QuitButton
 onready var sound_vol_slider : HSlider = $CanvasLayer/SoundVolumeSlider
+onready var pb_label : Label = $CanvasLayer/PBLabel
 
 
 func _ready() -> void:
@@ -17,6 +18,8 @@ func _ready() -> void:
 	sound_vol_slider.connect("value_changed", self, "_update_sound_volume")
 	
 	sound_vol_slider.set_value(Options.sound_volume)
+
+	pb_label.set_text(Formatter.format_time_string(SaveData.best_time))
 	
 	EventBus.emit_signal("transition_in_triggered")
 
