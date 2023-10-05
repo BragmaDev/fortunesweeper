@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://interface/menus/BackgroundTilemap.tscn" type="PackedScene" id=1]
 [ext_resource path="res://interface/menus/main_menu.gd" type="Script" id=2]
 [ext_resource path="res://effects/TransitionRect.tscn" type="PackedScene" id=3]
 [ext_resource path="res://interface/textures/pb_icon.png" type="Texture" id=4]
+[ext_resource path="res://interface/textures/title.png" type="Texture" id=5]
 [ext_resource path="res://interface/textures/sound_volume_icon.png" type="Texture" id=6]
 
 [node name="MainMenu" type="Node2D"]
@@ -11,14 +12,16 @@ script = ExtResource( 2 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Title" type="Label" parent="CanvasLayer"]
+[node name="Title" type="TextureRect" parent="CanvasLayer"]
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-margin_left = -29.0
-margin_top = 32.0
-margin_right = 29.0
-margin_bottom = 13.0
-text = "FORTUNESWEEPER"
+anchor_bottom = 0.5
+margin_left = -48.0
+margin_top = -37.0
+margin_right = 48.0
+margin_bottom = -13.0
+texture = ExtResource( 5 )
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
 anchor_right = 1.0
