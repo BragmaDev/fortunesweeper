@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/cave_bat.png-a10b15c47c7ebca93906303664685b8e.stex"
+path="res://.import/warning.png-1883f1548407811e821ce36110c127ac.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://enemies/cave_bat/cave_bat.png"
-dest_files=[ "res://.import/cave_bat.png-a10b15c47c7ebca93906303664685b8e.stex" ]
+source_file="res://effects/warning.png"
+dest_files=[ "res://.import/warning.png-1883f1548407811e821ce36110c127ac.stex" ]
 
 [params]
 

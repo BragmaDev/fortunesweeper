@@ -28,6 +28,8 @@ func _spawn_bat() -> void:
 	var bat = BAT_SCENE.instance()
 	bat.init(spawn_pos.global_position, spawn_pos.direction)
 	get_tree().get_current_scene().add_child(bat)
+	
+	EffectManager.create_warning(spawn_pos.global_position + spawn_pos.direction * 40.0)
 
 
 func _start_spawning() -> void:

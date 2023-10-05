@@ -7,47 +7,47 @@
 script = ExtResource( 2 )
 
 [node name="SpawnTimer" type="Timer" parent="."]
-wait_time = 20.0
+wait_time = 2.0
 autostart = true
 
 [node name="SpawnPositions" type="Node" parent="."]
 
 [node name="Pos1" type="Position2D" parent="SpawnPositions"]
-position = Vector2( -8, -8 )
+position = Vector2( -32, -32 )
 script = ExtResource( 1 )
 direction = Vector2( 1, 1 )
 
 [node name="Pos2" type="Position2D" parent="SpawnPositions"]
-position = Vector2( -8, 60 )
+position = Vector2( -32, 60 )
 script = ExtResource( 1 )
 direction = Vector2( 1, 0 )
 
 [node name="Pos3" type="Position2D" parent="SpawnPositions"]
-position = Vector2( -8, 128 )
+position = Vector2( -32, 152 )
 script = ExtResource( 1 )
 direction = Vector2( 1, -1 )
 
 [node name="Pos4" type="Position2D" parent="SpawnPositions"]
-position = Vector2( 60, 128 )
+position = Vector2( 60, 152 )
 script = ExtResource( 1 )
 direction = Vector2( 0, -1 )
 
 [node name="Pos5" type="Position2D" parent="SpawnPositions"]
-position = Vector2( 128, 128 )
+position = Vector2( 152, 152 )
 script = ExtResource( 1 )
 direction = Vector2( -1, -1 )
 
 [node name="Pos6" type="Position2D" parent="SpawnPositions"]
-position = Vector2( 128, 60 )
+position = Vector2( 152, 60 )
 script = ExtResource( 1 )
 direction = Vector2( -1, 0 )
 
 [node name="Pos7" type="Position2D" parent="SpawnPositions"]
-position = Vector2( 128, -8 )
+position = Vector2( 152, -32 )
 script = ExtResource( 1 )
 direction = Vector2( -1, 1 )
 
 [node name="Pos8" type="Position2D" parent="SpawnPositions"]
-position = Vector2( 60, -8 )
+position = Vector2( 60, -32 )
 script = ExtResource( 1 )
 direction = Vector2( 0, 1 )

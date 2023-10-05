@@ -3,6 +3,7 @@ extends Node2D
 
 const HOLE_CIRCLE_EFFECT_SCENE : PackedScene = preload("res://effects/HoleCircleEffect.tscn")
 const TEXT_POPUP_SCENE : PackedScene = preload("res://effects/TextPopup.tscn")
+const WARNING_SCENE : PackedScene = preload("res://effects/Warning.tscn")
 
 
 func create_hole_circle_effect(pos : Vector2) -> void:
@@ -21,3 +22,9 @@ func create_text_popup(pos : Vector2, text : String, color : Color) -> void:
 	popup.init(text, color)
 	get_tree().get_current_scene().add_child(popup)
 	popup.set_global_position(pos)
+
+
+func create_warning(pos : Vector2) -> void:
+	var warning = WARNING_SCENE.instance()
+	get_tree().get_current_scene().add_child(warning)
+	warning.set_global_position(pos)
