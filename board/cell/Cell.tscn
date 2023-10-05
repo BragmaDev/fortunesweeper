@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://board/cell/cell.gd" type="Script" id=1]
 [ext_resource path="res://board/cell/cell.png" type="Texture" id=2]
@@ -103,6 +103,37 @@ extents = Vector2( 4, 4 )
 [sub_resource type="Curve" id=13]
 _data = [ Vector2( 0, 1 ), 0.0, -0.01551, 0, 0, Vector2( 1, 0.0124999 ), -2.20364, 0.0, 0, 0 ]
 
+[sub_resource type="Animation" id=14]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("ContentSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 4, 4 ) ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "drop_content"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("ContentSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 2, 1 ),
+"update": 0,
+"values": [ Vector2( 4, 4 ), Vector2( 4, 300 ) ]
+}
+
 [node name="Cell" type="Area2D"]
 script = ExtResource( 1 )
 
@@ -113,6 +144,7 @@ animation = "unrevealed"
 
 [node name="ContentSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 4, 4 )
+z_index = 1
 frames = SubResource( 8 )
 animation = "empty"
 
@@ -150,3 +182,7 @@ initial_velocity_random = 0.4
 angular_velocity = 118.9
 angular_velocity_random = 1.0
 scale_amount_curve = SubResource( 13 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 14 )
+anims/drop_content = SubResource( 15 )

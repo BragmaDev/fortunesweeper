@@ -24,6 +24,7 @@ onready var sprite : AnimatedSprite = $AnimatedSprite
 onready var content_sprite : AnimatedSprite = $ContentSprite
 onready var flag_sprite : AnimatedSprite = $FlagSprite
 onready var number_label : Label = $NumberLabel
+onready var anim : AnimationPlayer = $AnimationPlayer
 
 
 func _input_event(_viewport, event, _shape_idx) -> void:
@@ -111,9 +112,15 @@ func set_state(state : int) -> void:
 		sprite.set_animation("revealed")
 		$CPUParticles2D.set_emitting(true)
 		AudioManager.play("cell_reveal")
+		
 		# Remove flag automatically
 		set_flag(Flags.NONE)
 		emit_signal("flag_changed")
+		
+		# Check if the cell has treasure
+		if not _type == Types.EMPTY and not _type == Types.HOLE:
+			AudioManager.play("buzzer")
+			anim.play("drop_content")
 	
 	elif _state == States.MINED:
 		sprite.set_animation("revealed")
@@ -144,12 +151,12 @@ func _update_content_sprite() -> void:
 	elif _type == Types.GOLD:
 		content_sprite.set_animation("gold")
 		if _state == States.MINED and not _flag == Flags.GOLD:
-			content_sprite.set_modulate(Colors.BLACK)
+			anim.play("drop_content")
 		
 	elif _type == Types.DIAMOND:
 		content_sprite.set_animation("diamond")
 		if _state == States.MINED and not _flag == Flags.DIAMOND:
-			content_sprite.set_modulate(Colors.BLACK)
+			anim.play("drop_content")
 	
 
 func _update_number_label() -> void:
@@ -159,6 +166,7 @@ func _update_number_label() -> void:
 	# Update number label
 	if not _filled_nb_count <= 0: 
 		number_label.set_text(str(_filled_nb_count))
+		
 		# Set color
 		number_label.set("custom_colors/font_color", Colors.RED)
 		for neighbor in _neighbors:

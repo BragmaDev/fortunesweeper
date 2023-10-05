@@ -11,6 +11,7 @@ onready var spawn_timer : Timer = $SpawnTimer
 
 func _ready() -> void:
 	EventBus.connect("level_ended", self, "_stop_spawning")
+	EventBus.connect("finish_button_pressed", self, "_stop_spawning")
 	EventBus.connect("level_started", self, "_start_spawning")
 	spawn_timer.connect("timeout", self, "_spawn_bat")
 	

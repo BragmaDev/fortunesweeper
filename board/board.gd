@@ -305,11 +305,13 @@ func _reveal_cell(cell : Cell) -> void:
 		elif current.get_type() == Cell.Types.GOLD:
 			_gold_count -= 1
 			EventBus.emit_signal("board_flags_changed")
+			AudioManager.play("buzzer")
 			return
 			
 		elif current.get_type() == Cell.Types.DIAMOND:
 			_diamond_count -= 1
 			EventBus.emit_signal("board_flags_changed")
+			AudioManager.play("buzzer")
 			return
 		
 		# Add surrounding empty cells to reveal queue

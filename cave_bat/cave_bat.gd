@@ -13,6 +13,7 @@ onready var sprite : AnimatedSprite = $AnimatedSprite
 
 func _ready() -> void:
 	EventBus.connect("sequence_started", self, "queue_free")
+	EventBus.connect("level_ended", self, "queue_free")
 	connect("mouse_entered", self, "_handle_mouse_collision")
 	
 	# Create timer to free this node
