@@ -5,6 +5,7 @@
 [ext_resource path="res://shaders/dropshadow.gdshader" type="Shader" id=4]
 
 [sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 5, 5 )
 
 [sub_resource type="ShaderMaterial" id=12]
 shader = ExtResource( 4 )
@@ -66,4 +67,5 @@ shape = SubResource( 7 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 material = SubResource( 12 )
 frames = SubResource( 5 )
+frame = 3
 playing = true

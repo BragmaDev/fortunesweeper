@@ -138,6 +138,7 @@ func _get_cell_neighbors(row : int, col : int) -> Array:
 	return neighbors
 
 
+# Used for level finishing
 func _mine_cell(cell : Cell) -> void:
 	cell.set_state(Cell.States.MINED)
 	
@@ -289,6 +290,11 @@ func _reveal_cell(cell : Cell) -> void:
 	
 	while not queue.empty():
 		var current = queue.pop_front()
+		
+		# Check that the cell is not already revealed
+		if current.get_state() == Cell.States.REVEALED:
+			return
+			
 		current.set_state(Cell.States.REVEALED)
 		
 		if current.get_type() == Cell.Types.HOLE:

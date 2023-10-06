@@ -30,7 +30,7 @@ animations = [ {
 "frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ) ],
 "loop": true,
 "name": "default",
-"speed": 4.0
+"speed": 3.0
 }, {
 "frames": [ null ],
 "loop": true,
@@ -89,7 +89,7 @@ tracks/0/keys = {
 material = SubResource( 7 )
 position = Vector2( 16, 16 )
 frames = SubResource( 8 )
-frame = 3
+frame = 2
 playing = true
 script = ExtResource( 1 )
 
