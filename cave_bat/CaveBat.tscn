@@ -8,6 +8,7 @@
 extents = Vector2( 5, 5 )
 
 [sub_resource type="ShaderMaterial" id=12]
+resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/offset = Vector2( 2, 2 )
 shader_param/modulate = Color( 0.0901961, 0.0823529, 0.0862745, 1 )

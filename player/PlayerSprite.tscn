@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://player/player_sprite.gd" type="Script" id=1]
 [ext_resource path="res://player/player.png" type="Texture" id=2]
@@ -25,6 +25,10 @@ region = Rect2( 64, 0, 32, 32 )
 atlas = ExtResource( 2 )
 region = Rect2( 96, 0, 32, 32 )
 
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 2 )
+region = Rect2( 128, 0, 32, 32 )
+
 [sub_resource type="SpriteFrames" id=8]
 animations = [ {
 "frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ) ],
@@ -32,7 +36,7 @@ animations = [ {
 "name": "default",
 "speed": 3.0
 }, {
-"frames": [ null ],
+"frames": [ SubResource( 15 ) ],
 "loop": true,
 "name": "shocked",
 "speed": 5.0
@@ -64,9 +68,22 @@ tracks/1/keys = {
 "update": 1,
 "values": [ 0 ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
 
 [sub_resource type="Animation" id=13]
 resource_name = "shocked"
+step = 0.05
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
 tracks/0/interp = 1
@@ -84,12 +101,24 @@ tracks/0/keys = {
 "method": "play"
 } ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( -1, 0 ), Vector2( 0, 0 ) ]
+}
 
 [node name="PlayerSprite" type="AnimatedSprite"]
 material = SubResource( 7 )
 position = Vector2( 16, 16 )
 frames = SubResource( 8 )
-frame = 2
+frame = 1
 playing = true
 script = ExtResource( 1 )
 
