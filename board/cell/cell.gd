@@ -21,9 +21,11 @@ var _flag : int = Flags.NONE
 var _neighbors : Array = []
 
 onready var sprite : AnimatedSprite = $AnimatedSprite
+onready var content_bg_sprite : AnimatedSprite = $ContentBGSprite
 onready var content_sprite : AnimatedSprite = $ContentSprite
 onready var flag_sprite : AnimatedSprite = $FlagSprite
 onready var number_label : Label = $NumberLabel
+onready var particles : CPUParticles2D = $CPUParticles2D
 onready var anim : AnimationPlayer = $AnimationPlayer
 
 
@@ -110,7 +112,7 @@ func set_state(state : int) -> void:
 		
 	elif _state == States.REVEALED:
 		sprite.set_animation("revealed")
-		$CPUParticles2D.set_emitting(true)
+		particles.set_emitting(true)
 		AudioManager.play("cell_reveal")
 		
 		# Remove flag automatically
@@ -120,12 +122,11 @@ func set_state(state : int) -> void:
 		# Check if the cell has treasure
 		if not _type == Types.EMPTY and not _type == Types.HOLE:
 			AudioManager.play("buzzer")
-			anim.play("drop_content")
 	
 	elif _state == States.MINED:
 		sprite.set_animation("revealed")
 		flag_sprite.set_animation("none")
-		$CPUParticles2D.set_emitting(true)
+		particles.set_emitting(true)
 		AudioManager.play("cell_reveal")
 	
 	_update_content_sprite()
@@ -150,14 +151,16 @@ func _update_content_sprite() -> void:
 		
 	elif _type == Types.GOLD:
 		content_sprite.set_animation("gold")
-		if _state == States.MINED and not _flag == Flags.GOLD:
+		content_bg_sprite.set_animation("gold")
+		if _state == States.REVEALED or (_state == States.MINED and not _flag == Flags.GOLD):
 			anim.play("drop_content")
-		
+				
 	elif _type == Types.DIAMOND:
 		content_sprite.set_animation("diamond")
-		if _state == States.MINED and not _flag == Flags.DIAMOND:
+		content_bg_sprite.set_animation("diamond")
+		if _state == States.REVEALED or (_state == States.MINED and not _flag == Flags.DIAMOND):
 			anim.play("drop_content")
-	
+
 
 func _update_number_label() -> void:
 	if not _type == Types.EMPTY:

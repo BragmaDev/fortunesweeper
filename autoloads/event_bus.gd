@@ -22,8 +22,8 @@ signal game_state_reset
 # Board signals
 signal board_completion_checked(complete)
 signal revealed_hole(cell)
-signal revealed_gold(cell)
-signal revealed_diamond(cell)
+signal revealed_gold
+signal revealed_diamond
 signal board_flags_changed
 signal hole_flagged_wrong
 signal treasure_flagged_wrong

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://board/cell/cell.gd" type="Script" id=1]
 [ext_resource path="res://board/cell/cell.png" type="Texture" id=2]
@@ -24,6 +24,32 @@ animations = [ {
 "frames": [ SubResource( 4 ) ],
 "loop": true,
 "name": "unrevealed",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 3 )
+region = Rect2( 32, 0, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 3 )
+region = Rect2( 24, 0, 8, 8 )
+
+[sub_resource type="SpriteFrames" id=16]
+animations = [ {
+"frames": [ SubResource( 17 ) ],
+"loop": true,
+"name": "diamond",
+"speed": 5.0
+}, {
+"frames": [ null ],
+"loop": true,
+"name": "empty",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 18 ) ],
+"loop": true,
+"name": "gold",
 "speed": 5.0
 } ]
 
@@ -141,6 +167,11 @@ script = ExtResource( 1 )
 position = Vector2( 4, 4 )
 frames = SubResource( 2 )
 animation = "unrevealed"
+
+[node name="ContentBGSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 4, 4 )
+frames = SubResource( 16 )
+animation = "empty"
 
 [node name="ContentSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 4, 4 )

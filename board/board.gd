@@ -292,33 +292,34 @@ func _reveal_cell(cell : Cell) -> void:
 		var current = queue.pop_front()
 		
 		# Check that the cell is not already revealed
-		if current.get_state() == Cell.States.REVEALED:
-			return
-			
-		current.set_state(Cell.States.REVEALED)
+		if not current.get_state() == Cell.States.REVEALED:
+			current.set_state(Cell.States.REVEALED)
 		
-		if current.get_type() == Cell.Types.HOLE:
-			_hole_count -= 1
-			EventBus.emit_signal("board_flags_changed")
-			EventBus.emit_signal("revealed_hole", current)
-			EffectManager.create_text_popup(
-					current.global_position + Vector2(4, 0), 
-					Formatter.format_money_string(_game_state.HOLE_PENALTY), 
-					Colors.RED
-			)
-			return
-		
-		elif current.get_type() == Cell.Types.GOLD:
-			_gold_count -= 1
-			EventBus.emit_signal("board_flags_changed")
-			AudioManager.play("buzzer")
-			return
+			# Process effects of revealing the cell
+			if current.get_type() == Cell.Types.HOLE:
+				_hole_count -= 1
+				EventBus.emit_signal("board_flags_changed")
+				EventBus.emit_signal("revealed_hole", current)
+				EffectManager.create_text_popup(
+						current.global_position + Vector2(4, 0), 
+						Formatter.format_money_string(_game_state.HOLE_PENALTY), 
+						Colors.RED
+				)
+				return
 			
-		elif current.get_type() == Cell.Types.DIAMOND:
-			_diamond_count -= 1
-			EventBus.emit_signal("board_flags_changed")
-			AudioManager.play("buzzer")
-			return
+			elif current.get_type() == Cell.Types.GOLD:
+				_gold_count -= 1
+				EventBus.emit_signal("board_flags_changed")
+				EventBus.emit_signal("revealed_gold")
+				AudioManager.play("buzzer")
+				return
+				
+			elif current.get_type() == Cell.Types.DIAMOND:
+				_diamond_count -= 1
+				EventBus.emit_signal("board_flags_changed")
+				EventBus.emit_signal("revealed_diamond")
+				AudioManager.play("buzzer")
+				return
 		
 		# Add surrounding empty cells to reveal queue
 		if current.get_filled_nb_count() == 0:
@@ -331,6 +332,7 @@ func _reveal_cell(cell : Cell) -> void:
 					queue.push_back(neighbor)
 				
 				visited.append(neighbor)
+		
 
 
 func _update_neighbor_arrays() -> void:

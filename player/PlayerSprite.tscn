@@ -60,7 +60,7 @@ animations = [ {
 "frames": [ SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
 "loop": false,
 "name": "shocked",
-"speed": 5.0
+"speed": 8.0
 } ]
 
 [sub_resource type="Animation" id=14]
