@@ -6,6 +6,6 @@
 script = ExtResource( 1 )
 size = 14
 pos_offset = Vector2( 4, 4 )
-hole_count = 21
+hole_count = 18
 gold_count = 17
-diamond_count = 3
+diamond_count = 5

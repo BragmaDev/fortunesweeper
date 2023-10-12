@@ -7,8 +7,7 @@
 script = ExtResource( 2 )
 
 [node name="SpawnTimer" type="Timer" parent="."]
-wait_time = 2.0
-autostart = true
+wait_time = 30.0
 
 [node name="SpawnPositions" type="Node" parent="."]
 

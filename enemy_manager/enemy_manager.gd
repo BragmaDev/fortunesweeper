@@ -33,8 +33,12 @@ func _spawn_bat() -> void:
 
 
 func _start_spawning() -> void:
-	#if _game_state.level >= 3:
-	spawn_timer.start()
+	if _game_state.level >= 4:
+		spawn_timer.set_wait_time(5.0)
+		spawn_timer.start()
+	elif _game_state.level >= 3:
+		spawn_timer.set_wait_time(10.0)
+		spawn_timer.start()
 
 
 func _stop_spawning() -> void:

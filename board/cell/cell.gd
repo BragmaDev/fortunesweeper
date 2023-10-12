@@ -35,14 +35,16 @@ func _input_event(_viewport, event, _shape_idx) -> void:
 			event is InputEventMouseButton
 			and event.get_button_index() == BUTTON_LEFT
 			and event.is_pressed()
+			and _state == States.UNREVEALED
 	):
 		emit_signal("pressed")
 	
 	# Check if the cell was chorded
 	elif (
 			event is InputEventMouseButton
-			and event.get_button_index() == BUTTON_MIDDLE
+			and (event.get_button_index() == BUTTON_MIDDLE or event.get_button_index() == BUTTON_LEFT)
 			and event.is_pressed()
+			and _state == States.REVEALED
 	):
 		emit_signal("chorded")
 	
