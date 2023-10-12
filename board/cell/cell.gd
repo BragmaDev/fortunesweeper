@@ -34,7 +34,7 @@ func _input_event(_viewport, event, _shape_idx) -> void:
 	if (
 			event is InputEventMouseButton
 			and event.get_button_index() == BUTTON_LEFT
-			and event.is_pressed()
+			and not event.is_pressed()
 			and _state == States.UNREVEALED
 	):
 		emit_signal("pressed")
@@ -43,7 +43,7 @@ func _input_event(_viewport, event, _shape_idx) -> void:
 	elif (
 			event is InputEventMouseButton
 			and (event.get_button_index() == BUTTON_MIDDLE or event.get_button_index() == BUTTON_LEFT)
-			and event.is_pressed()
+			and not event.is_pressed()
 			and _state == States.REVEALED
 	):
 		emit_signal("chorded")
@@ -52,7 +52,7 @@ func _input_event(_viewport, event, _shape_idx) -> void:
 	elif (
 			event is InputEventMouseButton
 			and event.get_button_index() == BUTTON_RIGHT
-			and event.is_pressed()
+			and not event.is_pressed()
 			and _state == States.UNREVEALED
 	):
 		emit_signal("flagged")

@@ -16,6 +16,7 @@ func _ready() -> void:
 	start_button.connect("pressed", SceneManager, "change_scene", [SceneManager.MAIN_SCENE_PATH])
 	quit_button.connect("pressed", SceneManager, "quit_game")
 	sound_vol_slider.connect("value_changed", self, "_update_sound_volume")
+	sound_vol_slider.connect("drag_ended", self, "_play_slider_sound")
 	
 	sound_vol_slider.set_value(Options.sound_volume)
 
@@ -27,6 +28,10 @@ func _ready() -> void:
 func _disable_buttons() -> void:
 	for button in [start_button, help_button, credits_button, quit_button]:
 		button.set_disabled(true)
+
+
+func _play_slider_sound(_value : float) -> void:
+	AudioManager.play("hover", 1.0, false)
 
 
 func _update_sound_volume(value : float) -> void:

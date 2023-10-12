@@ -39,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://enemy_manager/enemy_spawn_position.gd"
 }, {
+"base": "Button",
+"class": "ExtButton",
+"language": "GDScript",
+"path": "res://interface/ext_button.gd"
+}, {
 "base": "Node",
 "class": "Formatter",
 "language": "GDScript",
@@ -66,6 +71,7 @@ _global_script_class_icons={
 "Cell": "",
 "Colors": "",
 "EnemySpawnPosition": "",
+"ExtButton": "",
 "Formatter": "",
 "GameStateData": "",
 "TextPopup": "",

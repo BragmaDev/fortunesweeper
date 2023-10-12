@@ -4,7 +4,9 @@ extends Node
 var sfx = {
 		"buzzer": "res://sfx/buzzer.wav",
 		"cell_reveal": "res://sfx/cell_reveal.wav",
-		"hole_fall": "res://sfx/hole_fall.wav",
+		"confirm": "res://sfx/confirm.wav",
+		"hole_fall": "res://sfx/hole_fall2.wav",
+		"hover": "res://sfx/hover.wav",
 		"money_increase": "res://sfx/money_increase.wav",
 }
 
@@ -13,6 +15,8 @@ var _pool = []
 
 
 func _ready() -> void:
+	set_pause_mode(PAUSE_MODE_PROCESS)
+	
 	# Populate '_pool' with dictionaries containing AudioStreamPlayer nodes and sfx names
 	for sound in sfx:
 		# Set up AudioStreamPlayer
