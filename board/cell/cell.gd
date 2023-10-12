@@ -85,12 +85,15 @@ func set_flag(flag : int) -> void:
 	
 	elif flag == Flags.HOLE:
 		flag_sprite.set_animation("hole")
+		AudioManager.play("flag", 1.0, false, -0.2)
 	
 	elif flag == Flags.GOLD:
 		flag_sprite.set_animation("gold")
+		AudioManager.play("flag", 1.0, false, -0.1)
 	
 	elif flag == Flags.DIAMOND:
 		flag_sprite.set_animation("diamond")
+		AudioManager.play("flag", 1.0, false, 0.0)
 
 
 func set_neighbors(neighbors : Array) -> void:

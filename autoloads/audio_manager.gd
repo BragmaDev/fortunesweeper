@@ -5,6 +5,7 @@ var sfx = {
 		"buzzer": "res://sfx/buzzer.wav",
 		"cell_reveal": "res://sfx/cell_reveal.wav",
 		"confirm": "res://sfx/confirm.wav",
+		"flag": "res://sfx/flag.wav",
 		"hole_fall": "res://sfx/hole_fall2.wav",
 		"hover": "res://sfx/hover.wav",
 		"money_increase": "res://sfx/money_increase.wav",
