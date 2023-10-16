@@ -3,7 +3,7 @@ extends Node
 
 
 static func format_time_string(time : float) -> String:
-	if time <= 0:
+	if time < 0:
 		return "--:--.--"
 	
 	var time_min = max(int(time / 60), 0)
