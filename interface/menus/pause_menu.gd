@@ -10,11 +10,14 @@ onready var quit_button : Button = $CenterContainer/VBoxContainer/QuitButton
 
 func _ready() -> void:
 	for button in [restart_button, quit_button]:
-		button.connect("pressed", self, "_disable")
+		button.connect("pressed", self, "_disable", [true])
 	
 	resume_button.connect("pressed", self, "toggle", [false])
 	restart_button.connect("pressed", SceneManager, "change_scene", [SceneManager.MAIN_SCENE_PATH])
 	quit_button.connect("pressed", SceneManager, "change_scene", [SceneManager.MAIN_MENU_SCENE_PATH])
+	
+	EventBus.connect("sequence_started", self, "_disable", [true])
+	EventBus.connect("sequence_finished", self, "_disable", [false])
 	
 	_disabled = false
 
@@ -32,7 +35,7 @@ func toggle(active : bool) -> void:
 	SceneManager.set_pause(active)
 
 
-func _disable() -> void:
-	_disabled = true
+func _disable(value : bool) -> void:
+	_disabled = value
 	for button in [resume_button, restart_button, quit_button]:
-		button.set_disabled(true)
+		button.set_disabled(value)
