@@ -81,7 +81,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Fortunesweeper"
-run/main_scene="res://interface/menus/MainMenu.tscn"
+run/main_scene="res://intro_scene/IntroScene.tscn"
 config/icon="res://icon.png"
 
 [autoload]
