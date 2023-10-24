@@ -14,6 +14,7 @@ func _ready() -> void:
 		button.connect("pressed", self, "_disable_buttons")
 	
 	start_button.connect("pressed", SceneManager, "change_scene", [SceneManager.MAIN_SCENE_PATH])
+	help_button.connect("pressed", SceneManager, "change_scene", [SceneManager.HELP_SCENE_PATH])
 	quit_button.connect("pressed", SceneManager, "quit_game")
 	sound_vol_slider.connect("value_changed", self, "_update_sound_volume")
 	sound_vol_slider.connect("drag_ended", self, "_play_slider_sound")

@@ -8,7 +8,7 @@ func _ready() -> void:
 	start_transition_in()
 
 
-func start_transition_in(duration : float = 0.7) -> void:
+func start_transition_in(duration : float = 0.5) -> void:
 	show()
 	material.set("shader_param/cutoff", 1.0)
 	material.set("shader_param/flipped", 0.0)
@@ -17,7 +17,7 @@ func start_transition_in(duration : float = 0.7) -> void:
 	tween.tween_property(material, "shader_param/cutoff", 0.0, duration)
 
 
-func start_transition_out(duration : float = 0.7) -> void:
+func start_transition_out(duration : float = 0.5) -> void:
 	show()
 	material.set("shader_param/cutoff", 0.0)
 	material.set("shader_param/flipped", 1.0)

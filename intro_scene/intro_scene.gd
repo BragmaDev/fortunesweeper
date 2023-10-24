@@ -14,8 +14,11 @@ func _ready() -> void:
 
 
 func _process(_delta : float) -> void:
+	if anim.get_current_animation() == "":
+		return
+		
 	# Check for animation skip
-	if Input.is_action_just_pressed("skip") and anim.current_animation_position >= 1.0:
+	if Input.is_action_just_pressed("skip") and anim.get_current_animation_position() >= 0.5:
 		anim.stop()
 		SceneManager.change_scene(SceneManager.MAIN_MENU_SCENE_PATH)
 

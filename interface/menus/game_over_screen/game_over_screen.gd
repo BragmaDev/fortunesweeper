@@ -27,7 +27,7 @@ func _ready() -> void:
 
 func _process(_delta : float) -> void:
 	# Check for animation skip
-	if Input.is_action_just_pressed("skip") and anim.current_animation_position >= 1.0:
+	if Input.is_action_just_pressed("skip") and anim.current_animation_position >= 0.5:
 		anim.seek(8.0)
 
 
