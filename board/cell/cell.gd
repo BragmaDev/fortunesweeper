@@ -25,8 +25,14 @@ onready var content_bg_sprite : AnimatedSprite = $ContentBGSprite
 onready var content_sprite : AnimatedSprite = $ContentSprite
 onready var flag_sprite : AnimatedSprite = $FlagSprite
 onready var number_label : Label = $NumberLabel
+onready var sparkle : AnimatedSprite = $Sparkle
 onready var particles : CPUParticles2D = $CPUParticles2D
 onready var anim : AnimationPlayer = $AnimationPlayer
+
+
+func _ready() -> void:
+	sparkle.play("default")
+	sparkle.set_visible(false) # Make sparkle invisible
 
 
 func _input_event(_viewport, event, _shape_idx) -> void:
@@ -147,6 +153,25 @@ func set_state(state : int) -> void:
 
 func set_type(type : int) -> void:
 	_type = type
+	
+	# Set sparkle animation at this point for syncing purposes
+	# Sparkle should still be invisible
+	if type == Types.DIAMOND:
+		sparkle.play("diamond")
+	
+	elif type == Types.GOLD:
+		sparkle.play("gold")
+
+
+# Updates the sparkle animation, but does not make it visible
+func update_sparkle() -> void:
+	for neighbor in _neighbors:
+		if neighbor.get_type() == Types.DIAMOND:
+			sparkle.play("diamond")
+			break
+		
+		elif neighbor.get_type() == Types.GOLD:
+			sparkle.play("gold")
 
 
 func _update_content_sprite() -> void:
@@ -184,5 +209,9 @@ func _update_number_label() -> void:
 			
 			elif neighbor.get_type() == Types.GOLD:
 				number_label.set("custom_colors/font_color", Colors.YELLOW)
+		
+		# Make the sparkle visible
+		sparkle.set_visible(true)
+		
 	else:
 		number_label.set_text("")

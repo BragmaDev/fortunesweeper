@@ -283,6 +283,7 @@ func _reveal_cell(cell : Cell) -> void:
 		protected_cells.append(cell)
 		_place_contents(protected_cells)
 		_update_neighbor_arrays()
+		_update_cell_sparkles()
 		_initiated = true
 	
 	var queue = [cell] # Queue for cells to reveal
@@ -340,3 +341,10 @@ func _update_neighbor_arrays() -> void:
 		for col in _size:
 			var cell = _cells[row][col]
 			cell.set_neighbors(_get_cell_neighbors(cell.row, cell.col))
+
+
+func _update_cell_sparkles() -> void:
+	for row in _size:
+		for col in _size:
+			var cell = _cells[row][col]
+			cell.update_sparkle()
