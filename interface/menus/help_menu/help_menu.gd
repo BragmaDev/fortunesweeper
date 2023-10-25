@@ -52,6 +52,8 @@ func _change_page(page_num : int) -> void:
 
 func _on_back_pressed() -> void:
 	SceneManager.change_scene(SceneManager.MAIN_MENU_SCENE_PATH)
+	back_button.set_disabled(true)
+	next_button.set_disabled(true)
 
 
 func _on_next_pressed() -> void:
