@@ -4,6 +4,7 @@ extends Node
 const CONFIG_PATH: String = "user://config.ini"
 
 var sound_volume : float = 0.1
+var music_volume : float = 0.1
 
 
 func _ready() -> void:
@@ -22,16 +23,24 @@ func load_config(path: String) -> void:
 			return
 		
 	set_sound_volume(config.get_value("audio", "sound_volume", 0.1))
+	set_music_volume(config.get_value("audio", "music_volume", 0.1))
 
 
 func save_config() -> void:
 	var config = ConfigFile.new()
 	
 	config.set_value("audio", "sound_volume", sound_volume)
+	config.set_value("audio", "music_volume", music_volume)
 	
 	var error_msg = config.save(CONFIG_PATH)
 	if not error_msg == OK:
 		push_warning("Writing the options file failed.")
+
+
+# 'value': 0.0 - 1.0
+func set_music_volume(value : float) -> void:
+	music_volume = value
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear2db(music_volume))
 
 
 # 'value': 0.0 - 1.0

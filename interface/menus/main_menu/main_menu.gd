@@ -6,6 +6,7 @@ onready var help_button : Button = $CanvasLayer/CenterContainer/VBoxContainer/He
 onready var credits_button : Button = $CanvasLayer/CenterContainer/VBoxContainer/CreditsButton
 onready var quit_button : Button = $CanvasLayer/CenterContainer/VBoxContainer/QuitButton
 onready var sound_vol_slider : HSlider = $CanvasLayer/SoundVolumeSlider
+onready var music_vol_slider : HSlider = $CanvasLayer/MusicVolumeSlider
 onready var pb_label : Label = $CanvasLayer/PBLabel
 
 
@@ -18,12 +19,15 @@ func _ready() -> void:
 	quit_button.connect("pressed", SceneManager, "quit_game")
 	sound_vol_slider.connect("value_changed", self, "_update_sound_volume")
 	sound_vol_slider.connect("drag_ended", self, "_play_slider_sound")
+	music_vol_slider.connect("value_changed", self, "_update_music_volume")
 	
 	sound_vol_slider.set_value(Options.sound_volume)
+	music_vol_slider.set_value(Options.music_volume)
 
 	pb_label.set_text(Formatter.format_time_string(SaveData.best_time))
 	
 	EventBus.emit_signal("transition_in_triggered")
+	AudioManager.play_music()
 
 
 func _disable_buttons() -> void:
@@ -33,6 +37,11 @@ func _disable_buttons() -> void:
 
 func _play_slider_sound(_value : float) -> void:
 	AudioManager.play("hover", 1.0, false)
+
+
+func _update_music_volume(value : float) -> void:
+	Options.set_music_volume(value)
+	Options.save_config()
 
 
 func _update_sound_volume(value : float) -> void:

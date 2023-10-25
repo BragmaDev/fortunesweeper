@@ -12,7 +12,9 @@ var sfx = {
 }
 
 var _sfx_bus : String = "SFX"
+var _music_bus : String = "Music"
 var _pool = []
+var _music_player = AudioStreamPlayer.new()
 
 
 func _ready() -> void:
@@ -27,6 +29,11 @@ func _ready() -> void:
 		player.set_stream(load(sfx[sound]))
 		
 		_pool.append({"player": player, "sound": sound})
+	
+	# Set up music player
+	_music_player.set_bus(_music_bus)
+	_music_player.set_stream(load("res://music/menubgm.wav"))
+	add_child(_music_player)
 
 
 # Plays a sound effect
@@ -52,3 +59,15 @@ func play(
 	
 	player.play()
 	
+
+# Plays a music track
+func play_music() -> void:
+	if _music_player.is_playing():
+		return
+		
+	_music_player.play()
+
+
+# Stops the currently playing music track
+func stop_music() -> void:
+	_music_player.stop()

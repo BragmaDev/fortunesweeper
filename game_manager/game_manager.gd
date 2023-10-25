@@ -32,7 +32,9 @@ func _ready() -> void:
 	# Set up board
 	_current_level_data = LEVEL_1_BOARD_DATA
 	_create_board()
+	
 	EventBus.emit_signal("level_started")
+	AudioManager.stop_music()
 
 
 func _physics_process(delta : float) -> void:
