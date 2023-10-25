@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://interface/menus/main_menu/main_menu.gd" type="Script" id=1]
 [ext_resource path="res://interface/ext_button.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://interface/menus/BackgroundTilemap.tscn" type="PackedScene" id=6]
 [ext_resource path="res://effects/TransitionRect.tscn" type="PackedScene" id=7]
 [ext_resource path="res://interface/textures/music_volume_icon.png" type="Texture" id=8]
+[ext_resource path="res://interface/menus/credits/Credits.tscn" type="PackedScene" id=9]
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource( 1 )
@@ -66,10 +67,10 @@ text = "Quit"
 script = ExtResource( 2 )
 
 [node name="SoundVolumeSlider" type="HSlider" parent="CanvasLayer"]
-margin_left = 17.0
-margin_top = 8.0
-margin_right = 37.0
-margin_bottom = 16.0
+margin_left = 18.0
+margin_top = 95.0
+margin_right = 38.0
+margin_bottom = 103.0
 max_value = 1.0
 step = 0.1
 value = 1.0
@@ -81,10 +82,10 @@ margin_bottom = 8.0
 texture = ExtResource( 5 )
 
 [node name="MusicVolumeSlider" type="HSlider" parent="CanvasLayer"]
-margin_left = 17.0
-margin_top = 16.0
-margin_right = 37.0
-margin_bottom = 24.0
+margin_left = 18.0
+margin_top = 103.0
+margin_right = 38.0
+margin_bottom = 111.0
 max_value = 1.0
 step = 0.1
 value = 1.0
@@ -112,5 +113,10 @@ margin_bottom = 11.0
 texture = ExtResource( 3 )
 
 [node name="TransitionRect" parent="CanvasLayer" instance=ExtResource( 7 )]
+
+[node name="CreditsCanvas" type="CanvasLayer" parent="."]
+
+[node name="Credits" parent="CreditsCanvas" instance=ExtResource( 9 )]
+visible = false
 
 [node name="BackgroundTilemap" parent="." instance=ExtResource( 6 )]

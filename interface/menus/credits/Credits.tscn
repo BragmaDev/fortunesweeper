@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://interface/ext_button.gd" type="Script" id=1]
+[ext_resource path="res://interface/menus/credits/credits.gd" type="Script" id=2]
+
+[node name="Credits" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -8.0
+script = ExtResource( 2 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+bbcode_enabled = true
+bbcode_text = "[center]CREDITS
+
+Developer - Matti Bragge
+Font - \"m3x6\" by Daniel Linssen
+
+
+(c) 2023 Matti Bragge"
+text = "CREDITS
+
+Developer - Matti Bragge
+Font - \"m3x6\" by Daniel Linssen
+
+
+(c) 2023 Matti Bragge"
+
+[node name="BackButton" type="Button" parent="."]
+margin_right = 40.0
+margin_bottom = 13.0
+text = "Back"
+script = ExtResource( 1 )
