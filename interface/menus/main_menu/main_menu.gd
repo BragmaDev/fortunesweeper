@@ -25,6 +25,10 @@ func _ready() -> void:
 	music_vol_slider.connect("value_changed", self, "_update_music_volume")
 	credits.connect("closed", self, "_show_menu")
 	
+	# Disable quit button in HTML5 mode
+	if OS.get_name() == "HTML5":
+		quit_button.set_disabled(true)
+	
 	sound_vol_slider.set_value(Options.sound_volume)
 	music_vol_slider.set_value(Options.music_volume)
 
@@ -54,6 +58,10 @@ func _show_menu() -> void:
 	canvas.show()
 	for button in [start_button, help_button, credits_button, quit_button]:
 		button.set_disabled(false)
+	
+	# Disable quit button in HTML5 mode
+	if OS.get_name() == "HTML5":
+		quit_button.set_disabled(true)
 
 
 func _update_music_volume(value : float) -> void:
