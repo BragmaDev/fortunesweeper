@@ -41,6 +41,11 @@ func _physics_process(delta : float) -> void:
 	# Run timer
 	if not _game_state.paused:
 		_game_state.time += delta
+	
+	# DEBUG
+	#if Input.is_action_just_pressed("ui_down"):
+	#	_add_to_money(1000000)
+	#	_finish_level()
 
 
 func _add_to_money(amount : int) -> void:
