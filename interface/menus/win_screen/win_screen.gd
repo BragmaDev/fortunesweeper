@@ -24,6 +24,7 @@ func _ready() -> void:
 	
 	anim.play("show")
 	
+	AudioManager.play_music()
 	EventBus.emit_signal("transition_in_triggered")
 
 

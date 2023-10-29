@@ -32,7 +32,7 @@ func _ready() -> void:
 	
 	# Set up music player
 	_music_player.set_bus(_music_bus)
-	_music_player.set_stream(load("res://music/menubgm.wav"))
+	_music_player.set_stream(load("res://music/menubgm.ogg"))
 	add_child(_music_player)
 
 
