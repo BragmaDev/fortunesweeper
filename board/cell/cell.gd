@@ -24,13 +24,14 @@ onready var sprite : AnimatedSprite = $AnimatedSprite
 onready var content_bg_sprite : AnimatedSprite = $ContentBGSprite
 onready var content_sprite : AnimatedSprite = $ContentSprite
 onready var flag_sprite : AnimatedSprite = $FlagSprite
-onready var number_label : Label = $NumberLabel
+onready var number_sprite : AnimatedSprite = $NumberSprite
 onready var sparkle : AnimatedSprite = $Sparkle
 onready var particles : CPUParticles2D = $CPUParticles2D
 onready var anim : AnimationPlayer = $AnimationPlayer
 
 
 func _ready() -> void:
+	number_sprite.set_animation("none")
 	sparkle.play("default")
 	sparkle.set_visible(false) # Make sparkle invisible
 
@@ -195,23 +196,26 @@ func _update_content_sprite() -> void:
 func _update_number_label() -> void:
 	if not _type == Types.EMPTY:
 		return
-	 
+	
 	# Update number label
-	if not _filled_nb_count <= 0: 
-		number_label.set_text(str(_filled_nb_count))
+	if not _filled_nb_count <= 0:
+		number_sprite.set_animation("default")
+		number_sprite.set_frame(_filled_nb_count - 1)
 		
-		# Set color
-		number_label.set("custom_colors/font_color", Colors.RED)
+		# Set animation and frame
 		for neighbor in _neighbors:
 			if neighbor.get_type() == Types.DIAMOND:
-				number_label.set("custom_colors/font_color", Colors.LIGHT_BLUE)
+				number_sprite.set_animation("diamond")
+				number_sprite.set_frame(_filled_nb_count - 1)
 				break
 			
 			elif neighbor.get_type() == Types.GOLD:
-				number_label.set("custom_colors/font_color", Colors.YELLOW)
+				number_sprite.set_animation("gold")
+				number_sprite.set_frame(_filled_nb_count - 1)
 		
 		# Make the sparkle visible
-		sparkle.set_visible(true)
+		#sparkle.set_visible(true)
 		
 	else:
-		number_label.set_text("")
+		# No filled neighbors, set invisible
+		number_sprite.set_animation("none")
