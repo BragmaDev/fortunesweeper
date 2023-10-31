@@ -112,8 +112,6 @@ margin_right = 13.0
 margin_bottom = 11.0
 texture = ExtResource( 3 )
 
-[node name="TransitionRect" parent="CanvasLayer" instance=ExtResource( 7 )]
-
 [node name="VersionLabel" type="Label" parent="CanvasLayer"]
 margin_left = 9.0
 margin_top = 4.0
@@ -121,6 +119,8 @@ margin_right = 49.0
 margin_bottom = 17.0
 custom_colors/font_color = Color( 0.34902, 0.341176, 0.341176, 1 )
 text = "v1.0"
+
+[node name="TransitionRect" parent="CanvasLayer" instance=ExtResource( 7 )]
 
 [node name="CreditsCanvas" type="CanvasLayer" parent="."]
 
