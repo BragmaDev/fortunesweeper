@@ -9,6 +9,7 @@ onready var hole_flag_label : Label = $FlagPanel/HoleFlagLabel
 onready var gold_flag_label : Label = $FlagPanel/GoldFlagLabel
 onready var diamond_flag_label : Label = $FlagPanel/DiamondFlagLabel
 onready var finish_button : TextureButton = $FinishButton
+onready var pause_button : TextureButton = $PauseButton
 onready var anim : AnimationPlayer = $AnimationPlayer
 
 
@@ -24,6 +25,7 @@ func _ready() -> void:
 	_update_money_label(false)
 	_toggle_finish_button(false)
 	finish_button.connect("pressed", EventBus, "emit_signal", ["finish_button_pressed"])
+	pause_button.connect("pressed", EventBus, "emit_signal", ["pause_button_pressed"])
 
 
 func _physics_process(_delta : float) -> void:

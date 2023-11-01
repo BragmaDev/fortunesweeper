@@ -18,6 +18,7 @@ func _ready() -> void:
 	
 	EventBus.connect("sequence_started", self, "_disable", [true])
 	EventBus.connect("sequence_finished", self, "_disable", [false])
+	EventBus.connect("pause_button_pressed", self, "toggle", [not is_visible()])
 	
 	_disabled = false
 

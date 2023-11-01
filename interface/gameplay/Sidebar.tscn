@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://interface/textures/finish_button_pressed.png" type="Texture" id=1]
 [ext_resource path="res://interface/textures/finish_button_normal.png" type="Texture" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://board/cell/flags.png" type="Texture" id=4]
 [ext_resource path="res://interface/gameplay/sidebar.gd" type="Script" id=5]
 [ext_resource path="res://player/PlayerSprite.tscn" type="PackedScene" id=6]
+[ext_resource path="res://interface/textures/pause_button.png" type="Texture" id=7]
+[ext_resource path="res://interface/textures/pause_button_pressed.png" type="Texture" id=8]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 4 )
@@ -31,7 +33,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0, 11 ) ]
+"values": [ Vector2( 0, 21 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("MoneyLabel:custom_colors/font_color")
@@ -60,7 +62,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.05, 0.2 ),
 "transitions": PoolRealArray( 0.5, -2, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 11 ), Vector2( 0, 13 ), Vector2( 0, 11 ) ]
+"values": [ Vector2( 0, 21 ), Vector2( 0, 23 ), Vector2( 0, 21 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("MoneyLabel:custom_colors/font_color")
@@ -89,7 +91,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.05, 0.2 ),
 "transitions": PoolRealArray( 0.5, -2, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 11 ), Vector2( 0, 9 ), Vector2( 0, 11 ) ]
+"values": [ Vector2( 0, 21 ), Vector2( 0, 19 ), Vector2( 0, 21 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("MoneyLabel:custom_colors/font_color")
@@ -116,19 +118,30 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.0901961, 0.0823529, 0.0862745, 1 )
 
+[node name="PauseButton" type="TextureButton" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -11.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = 11.0
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 8 )
+
 [node name="TimerLabel" type="Label" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -40.0
-margin_bottom = 13.0
+margin_top = 10.0
+margin_bottom = 23.0
 custom_colors/font_color = Color( 0.34902, 0.341176, 0.341176, 1 )
 text = "00:00.00"
 align = 1
 
 [node name="MoneyLabel" type="Label" parent="."]
-margin_top = 11.0
+margin_top = 21.0
 margin_right = 40.0
-margin_bottom = 24.0
+margin_bottom = 34.0
 custom_colors/font_color = Color( 0.972549, 0.772549, 0.227451, 1 )
 text = "$1,000,000"
 align = 1
