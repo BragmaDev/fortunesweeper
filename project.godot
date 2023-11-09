@@ -83,6 +83,7 @@ _global_script_class_icons={
 config/name="Fortunesweeper"
 run/main_scene="res://intro_scene/IntroScene.tscn"
 config/icon="res://icon.png"
+config/windows_native_icon="res://icon.ico"
 
 [autoload]
 
